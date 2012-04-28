@@ -1,3 +1,7 @@
+node_modules
+npm-debug.log
+app/app.js
+
 lib-cov
 *.seed
 *.log
@@ -10,6 +14,3 @@ lib-cov
 pids
 logs
 results
-
-node_modules
-npm-debug.log

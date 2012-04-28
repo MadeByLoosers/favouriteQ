@@ -1,0 +1,18 @@
+{
+  "author": "Gunt London",
+  "name": "favouriteQ",
+  "description": "What's your favourite?",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/GuntLondon/favouriteQ.git"
+  },
+  "dependencies": {
+    "ntwitter" : "0.3.x"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
