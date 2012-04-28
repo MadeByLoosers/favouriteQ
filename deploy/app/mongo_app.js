@@ -14,10 +14,7 @@ function getActiveQuestionId(callback){
   });
 }
 
-//TODO 1: write function addAnswer() do we need add user?
-//TODO 2: get data saving properlly
-//TODO 3: get objects saving with numeric IDs
-getActiveQuestionId(function getAnswersForQuestion(questionId){
+function getAnswersForQuestion(questionId){
   console.log('got answers for ' + questionId);
   //TODO 0: Order by needed?
   db.answers.find({question_id: questionId.toString()}, function(err, answers) {
@@ -34,4 +31,9 @@ getActiveQuestionId(function getAnswersForQuestion(questionId){
       console.log(answer);
     });
   });
-});
+}
+
+//TODO 1: write function addAnswer() do we need add user?
+//TODO 2: get data saving properlly
+//TODO 3: get objects saving with numeric IDs
+getActiveQuestionId(getAnswersForQuestion);

@@ -8,7 +8,8 @@
     "url": "git://github.com/GuntLondon/favouriteQ.git"
   },
   "dependencies": {
-    "ntwitter" : "0.3.x"
+    "ntwitter" : "0.3.x",
+    "mongojs" : "0.3.x"
   },
   "devDependencies": {},
   "optionalDependencies": {},
