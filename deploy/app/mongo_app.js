@@ -1,18 +1,32 @@
 // app.js
 var databaseUrl = "mydb"; // "username:password@example.com/mydb"
-var collections = ["users", "questions", "reports"]
+var collections = ["users", "questions", "answers"]
 var db = require("mongojs").connect(databaseUrl, collections);
 
-// 1. save user (insert)
-/*
-// app.js
-db.users.save({email: "petegaham1@gmaill.com", password: "123456", sex: "male"}, function(err, saved) {
-  if( err || !saved ) console.log("User not saved");
-  else console.log("User saved");
+// get active question from mongo
+function getActiveQuestionId(callback){
+  var activeId = false;
+  db.questions.find({active: true}, function(err, questions) {
+    if( err || !questions) console.log("No questions found");
+    
+    questions.forEach( function(question) {
+      callback(question._id);
+      //console.log(question._id);
+      //return question._id;
+    });
+  });
+}
+
+getActiveQuestionId(function(id){
+  console.log('in callback');
+  console.log("active question id " + id);
+  // 4. Get answers for active question (order)
 });
-*/
+
+// 5. Dump DB?
 
 /*
+// Save Questions
 db.questions.save({question: "Who's your favourite Jew?", asked: false});
 db.questions.save({question: "What's your favourite cheese?", asked: false});
 db.questions.save({question: "What's your favourite cephalopod?", asked: false});
@@ -31,7 +45,8 @@ db.users.update({email: "srirangan@gmail.com"}, {$set: {password: "iReallyLoveJe
 });
 */
 
-// 2. look up users (select)
+/*
+// 2. look up questions (select)
 //db.questions.find({sex: "male"}, function(err, users) {
 db.questions.find({}, function(err, users) {
   if( err || !users) console.log("No questions found");
@@ -39,7 +54,4 @@ db.questions.find({}, function(err, users) {
     console.log(maleUser);
   } );
 });
-
-// insert into other collections
-// join between collections
-// move db to another server?
+*/
