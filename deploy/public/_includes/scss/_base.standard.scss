@@ -20,6 +20,10 @@ a {
 	color: #999;
 	text-decoration: none;
 
+	&:visited {
+		color: #999;
+	}
+
 	&:hover {
 		color: #e41869;
 		text-decoration: underline;
