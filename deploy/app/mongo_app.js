@@ -32,12 +32,20 @@ getActiveQuestionId(function(id){
 getActiveQuestionId(function getAnswersForQuestion(questionId){
   console.log('got answers for ' + questionId);
   // Order by needed?
-  
-  db.answers.find({question_id: questionId}, function(err, answers) {
-    if( err || !answers) console.log("No answers found");
-    else console.log("answers mofo!");
+
+  // 4f9bee18320ea7f115000002
+  //db.answers.find({question_id: '4f9bee18320ea7f115000002'}, function(err, answers) {
+  db.answers.find({question_id: questionId.toString()}, function(err, answers) {
+    if( err || !answers){
+      console.log("No answers found");
+    }else{
+
+      console.log("answers mofo!");
+      console.log(answers);
+    }
 
     answers.forEach( function(answer) {
+      console.log('testing');
       console.log(answer);
     });
   });
