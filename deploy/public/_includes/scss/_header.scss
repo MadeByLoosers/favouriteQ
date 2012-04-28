@@ -1,0 +1,59 @@
+/* _header.scss */
+
+nav {
+	border-bottom: 1px solid #e41869;
+	background: #000;
+
+	ul {
+		text-align: center;
+
+		li {
+			display: inline-block;
+			padding-top: 10px;
+			padding-bottom: 11px;
+			padding-left: 9px;
+			padding-right: 18px;
+			position: relative;
+
+			&:before,
+			a {
+				color: #999;				
+			}
+
+			&:before {
+				@extend .font-josefin-bold;
+				content: '/';
+				display: block;
+				position: absolute;
+				right: -2px;
+				top: 4px;
+				font-size: 30px;
+			}
+
+			a {
+				text-decoration: none;
+				font-size: 20px;
+			}
+
+			&.last {
+				padding-right: 0;
+
+				&:before {
+					content: "";
+				}
+			}
+		}
+	}
+}
+
+#logo {
+	@extend .font-josefin-bold;
+	font-size: 80px;
+	background: url('/_includes/img/logo_bg.png') no-repeat scroll 0 0;
+	width: 220px;
+	height: 132px;
+	text-align: center;
+	text-transform: uppercase;
+	margin: 0 auto 30px;
+	padding-top: 18px;
+}
