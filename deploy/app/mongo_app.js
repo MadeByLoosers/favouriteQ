@@ -10,31 +10,16 @@ function getActiveQuestionId(callback){
     
     questions.forEach( function(question) {
       callback(question._id);
-      //getAnswersForQuestion(question._id);
     });
   });
 }
 
-/*
-function getAnswersForQuestion(questionId){
-  console.log('got answers for ' + questionId);
-}
-*/
-//function add Answer() do we need add user?
-
-
-//getActiveQuestionId();
-/*
-getActiveQuestionId(function(id){
-  console.log('got answers for ' + id);
-});
-*/
+//TODO 1: write function addAnswer() do we need add user?
+//TODO 2: get data saving properlly
+//TODO 3: get objects saving with numeric IDs
 getActiveQuestionId(function getAnswersForQuestion(questionId){
   console.log('got answers for ' + questionId);
-  // Order by needed?
-
-  // 4f9bee18320ea7f115000002
-  //db.answers.find({question_id: '4f9bee18320ea7f115000002'}, function(err, answers) {
+  //TODO 0: Order by needed?
   db.answers.find({question_id: questionId.toString()}, function(err, answers) {
     if( err || !answers){
       console.log("No answers found");
@@ -50,6 +35,3 @@ getActiveQuestionId(function getAnswersForQuestion(questionId){
     });
   });
 });
-//getActiveQuestionId(getAnswersForQuestion(id));
-
-// 5. Dump DB?
