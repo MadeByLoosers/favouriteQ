@@ -98,4 +98,10 @@ function postTweet(twit, tweet) {
 }
 
 
-module.exports.init = init;
+/*
+ * expose functionality
+ */
+module.exports = {
+  init: init,
+  postTweet: postTweet
+};

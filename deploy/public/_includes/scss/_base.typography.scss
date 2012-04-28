@@ -1,0 +1,11 @@
+/* _base.typography.scss */
+
+.font-josefin-bold {
+	font-family: 'Josefin Slab', serif;
+	font-weight: bold;
+}
+
+.font-josefin-bold-italic {
+	@extend .font-josefin-bold;
+	font-style: italic;
+}
