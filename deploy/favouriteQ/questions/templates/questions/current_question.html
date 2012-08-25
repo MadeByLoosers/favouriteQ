@@ -1,0 +1,15 @@
+{% extends 'questions/layout.html' %}
+
+{% block content %}
+
+<h2>{{ question.question }}</h2>
+
+<p>Answers:</p>
+
+<ul>
+    {% for answer in question.answer_set.all %}
+    <li>{{ answer.answer_text }} <a href="http://www.twitter.com/{{ answer.person }}">{{ answer.person.first_name }} {{ answer.person.surname }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
