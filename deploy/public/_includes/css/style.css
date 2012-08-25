@@ -453,6 +453,38 @@ nav {
     margin-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px; } }
+#gunt-badge {
+  position: fixed;
+  right: 0;
+  bottom: 100px; }
+
+#gunt-badge a {
+  display: block;
+  position: relative;
+  right: -68px;
+  top: 0;
+  border: 3px solid #666;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-right: none;
+  background: url("../img/gunt_badge.png") transparent no-repeat 12px 50%;
+  padding: 8px 8px 8px 40px;
+  color: #ccc;
+  font-family: Georgia, sans-serif;
+  font-size: 10px;
+  font-style: italic;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out; }
+
+#gunt-badge a:hover {
+  right: 0;
+  color: #fff;
+  border-color: #ea7277;
+  text-decoration: none; }
+
 /* _base.html5bp.mobile.scss */
 .ir {
   display: block;
