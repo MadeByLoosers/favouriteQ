@@ -7,8 +7,8 @@
 <p>Answers:</p>
 
 <ul>
-    {% for answer in question.answer_set.all %}
-    <li>{{ answer.answer_text }} <a href="">blah {{ answer.person_set.all }}</a></li>
+    {% for answer in answers %}
+    <li>{{ answer.answer_text }} <a href="http://www.twitter.com/{{ answer.person }}">{{ answer.person.first_name }} {{ answer.person.surname }}</a></li>
     {% endfor %}
 </ul>
 

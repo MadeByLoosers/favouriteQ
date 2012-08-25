@@ -5,8 +5,11 @@ def current_question(request):
 
     # get the question with the most recent asked date (null asked date means question hasn't been asked)
     question = Question.objects.order_by('-asked_date').filter(asked_date__isnull=False)[0]
-    #print q
-    # get answers for the question
+    answers = Answer.objects.filter(question_id=question.id)
 
-    return render_to_response('questions/current_question.html', {"question": question})
+    for answer in answers:
+        print answer.answer_text
+        print answer.person
+
+    return render_to_response('questions/current_question.html', {"question": question, "answers":answers})
     # {"results": results, "query": query}, context_instance=RequestContext(request)
