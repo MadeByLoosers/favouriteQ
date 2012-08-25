@@ -8,6 +8,9 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
+    def __unicode__(self):
+        return self.question
+
 class Person(models.Model):
     twitter_username = models.CharField(max_length=20)
     first_name = models.CharField(max_length=25)
@@ -17,6 +20,9 @@ class Person(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
+    def __unicode__(self):
+        return self.twitter_username
+
 class Answer(models.Model):
     question = models.ForeignKey(Question)
     answer_text = models.CharField(max_length=140) # should it be less as will include @favouriteQ? possibly allow non-twitter answering in future
@@ -24,3 +30,6 @@ class Answer(models.Model):
     # automatic system fields
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+
+    def __unicode__(self):
+        return self.answer_text
