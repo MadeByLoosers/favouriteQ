@@ -1,1 +1,15 @@
-<h2>current question template</h2>
+{% extends 'questions/layout.html' %}
+
+{% block content %}
+
+<h2>{{ question.question }}</h2>
+
+<p>Answers:</p>
+
+<ul>
+    {% for answer in question.answer_set.all %}
+    <li>{{ answer.answer_text }} <a href="">blah {{ answer.person_set.all }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
