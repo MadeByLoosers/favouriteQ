@@ -17,7 +17,7 @@ nav {
 
 			&:before,
 			a {
-				color: #999;				
+				color: #999;
 			}
 
 			&:before {
@@ -33,6 +33,11 @@ nav {
 			a {
 				text-decoration: none;
 				font-size: 20px;
+
+				&:hover,
+				&.active {
+					color:#e41869;
+				}
 			}
 
 			&.last {
@@ -49,7 +54,7 @@ nav {
 #logo {
 	@extend .font-josefin-bold;
 	font-size: 80px;
-	background: url('/_includes/img/logo_bg.png') no-repeat scroll 0 0;
+	background: url('../img/logo_bg.png') no-repeat scroll 0 0;
 	width: 220px;
 	height: 132px;
 	text-align: center;

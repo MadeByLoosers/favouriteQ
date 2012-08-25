@@ -215,21 +215,26 @@ td {
   padding: 0.2em 0; }
 
 /* _base.typography.scss */
-.font-josefin-bold, .font-josefin-bold-italic, .question h2 span, h1, h2, a, p, span, nav ul li:before, #logo {
+.font-josefin-bold, .font-josefin-bold-italic, .question h2 span,
+.collapsable h2 span, .question h3,
+.collapsable h3, h1, h2, a, p, span, form, form textarea,
+form input[type="text"], form input[type="submit"], nav ul li:before, #logo {
   font-family: 'Josefin Slab', serif;
   font-weight: bold; }
 
-.font-josefin-bold-italic, .question h2 span {
+.font-josefin-bold-italic, .question h2 span,
+.collapsable h2 span, .question h3,
+.collapsable h3 {
   font-style: italic; }
 
 /* _base.standard.scss */
 body {
-  background: url("/_includes/img/pattern_200x200.png") repeat scroll 0 0 black; }
+  background: url("../img/pattern_200x200.png") repeat scroll 0 0 black; }
 
 h1 {
   color: #000; }
 
-h2 {
+h2, h3 {
   color: #fff; }
 
 a {
@@ -248,8 +253,55 @@ p {
 
 nav ul,
 #main {
-  width: 1000px;
+  max-width: 1000px;
   margin: 0 auto; }
+
+form legend {
+  display: none; }
+form fieldset {
+  border: 0; }
+form label {
+  color: #fff;
+  text-align: right;
+  display: block; }
+form textarea,
+form input[type="text"] {
+  background: #e41869;
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+  color: #fff;
+  outline: none;
+  width: 100%;
+  margin: 10px auto;
+  resize: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+form input[type="submit"] {
+  -webkit-appearance: none;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 40px;
+  text-align: center;
+  margin: 0 auto;
+  color: #fff;
+  display: block;
+  border-bottom: 5px solid #fff; }
+  form input[type="submit"]:hover {
+    color: #ccc;
+    border-bottom-color: #ccc; }
+form ::-webkit-input-placeholder {
+  color: #ccc; }
+form :-moz-placeholder {
+  color: #ccc; }
+form input:invalid,
+form textarea:invalid {
+  background-color: #e41869; }
+form .input-container {
+  width: 100%;
+  margin: 20px auto; }
 
 /* _header.scss */
 nav {
@@ -277,6 +329,8 @@ nav {
       nav ul li a {
         text-decoration: none;
         font-size: 20px; }
+        nav ul li a:hover, nav ul li a.active {
+          color: #e41869; }
       nav ul li.last {
         padding-right: 0; }
         nav ul li.last:before {
@@ -284,7 +338,7 @@ nav {
 
 #logo {
   font-size: 80px;
-  background: url("/_includes/img/logo_bg.png") no-repeat scroll 0 0;
+  background: url("../img/logo_bg.png") no-repeat scroll 0 0;
   width: 220px;
   height: 132px;
   text-align: center;
@@ -292,33 +346,113 @@ nav {
   margin: 0 auto 30px;
   padding-top: 18px; }
 
+.collapsable {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: all 1.0s ease-in-out;
+  -moz-transition: all 1.0s ease-in-out;
+  -ms-transition: all 1.0s ease-in-out;
+  -o-transition: all 1.0s ease-in-out;
+  transition: all 1.0s ease-in-out; }
+  .collapsable .collapsable-clip {
+    max-width: 500px;
+    margin: 0 auto 40px auto;
+    padding: 20px 0 40px 0;
+    border-bottom: 10px solid #e41869; }
+    .collapsable .collapsable-clip h2 {
+      padding: 20px 0;
+      margin-bottom: 20px;
+      text-align: center; }
+    .collapsable .collapsable-clip h3 {
+      font-size: 22px;
+      margin-bottom: 0.5em; }
+    .collapsable .collapsable-clip p {
+      font-size: 18px;
+      line-height: 1.25;
+      margin-bottom: 0.5em; }
+
 /* _question.scss */
 .question h2,
-.question .question_answers .answer {
+.question .question_answers .answer,
+.collapsable h2,
+.collapsable .question_answers .answer {
   font-size: 40px;
   line-height: 46px; }
-.question h2 {
-  width: 500px;
+.question h2,
+.collapsable h2 {
+  max-width: 500px;
   margin: 0 auto;
   border-bottom: 10px solid #e41869;
   position: relative;
   text-align: center;
   padding-bottom: 22px; }
-  .question h2 span {
+  .question h2 span,
+  .collapsable h2 span {
     color: #999;
     padding-right: 18px; }
-.question .question_answers {
-  width: 500px;
+.question h3,
+.collapsable h3 {
+  margin-bottom: 0; }
+.question .question_answers,
+.collapsable .question_answers {
+  max-width: 500px;
   margin: 0 auto;
   text-align: center;
   padding: 0; }
-  .question .question_answers .answer {
+  .question .question_answers .answer,
+  .collapsable .question_answers .answer {
     color: #fff;
     margin-top: 36px;
     padding-bottom: 6px; }
-  .question .question_answers .author {
+  .question .question_answers .author,
+  .collapsable .question_answers .author {
     font-size: 16px; }
 
+@media (max-width:480px) {
+  /* NAV */
+  nav ul {
+    padding-top: 2px;
+    padding-bottom: 2px; }
+    nav ul li a {
+      font-size: 14px; }
+
+  /* LOGO */
+  #logo {
+    font-size: 40px;
+    background: url("../img/logo_bg.png") no-repeat scroll 0 0;
+    background-size: contain;
+    width: 110px;
+    height: 66px;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 auto 15px auto;
+    padding-top: 9px; }
+
+  /* TYPOGRAPHY */
+  .question h2,
+  .question .question_answers .answer,
+  .collapsable h2,
+  .collapsable .question_answers .answer {
+    font-size: 20px;
+    line-height: 23px; }
+
+  .question h2,
+  .collapsable h2 {
+    border-bottom-width: 5px;
+    padding-bottom: 11px;
+    padding-left: 20px;
+    padding-right: 20px; }
+
+  /* QUESTIONS AND ANSWERS */
+  .question .question_answers .answer {
+    margin-top: 18px; }
+
+  .collapsable .collapsable-clip {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px; } }
 /* _base.html5bp.mobile.scss */
 .ir {
   display: block;

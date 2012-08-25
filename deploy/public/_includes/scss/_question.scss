@@ -1,6 +1,7 @@
 /* _question.scss */
 
-.question {
+.question,
+.collapsable {
 
 	h2,
 	.question_answers .answer {
@@ -9,9 +10,9 @@
 	}
 
 	h2 {
-		width: 500px;
+		max-width: 500px;
 		margin: 0 auto;
-		border-bottom: 10px solid #e41869;		
+		border-bottom: 10px solid #e41869;
 		position: relative;
 		text-align: center;
 		padding-bottom: 22px;
@@ -23,8 +24,13 @@
 		}
 	}
 
+	h3 {
+		@extend .font-josefin-bold-italic;
+		margin-bottom:0;
+	}
+
 	.question_answers {
-		width: 500px;
+		max-width: 500px;
 		margin: 0 auto;
 		text-align: center;
 		padding: 0;

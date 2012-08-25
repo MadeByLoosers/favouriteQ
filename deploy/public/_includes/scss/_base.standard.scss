@@ -1,7 +1,7 @@
 /* _base.standard.scss */
 
 body {
-	background: url('/_includes/img/pattern_200x200.png') repeat scroll 0 0 #000;
+	background: url('../img/pattern_200x200.png') repeat scroll 0 0 #000;
 }
 
 h1, h2, a, p, span {
@@ -12,7 +12,7 @@ h1 {
 	color: #000;
 }
 
-h2 {
+h2, h3 {
 	color: #fff;
 }
 
@@ -38,6 +38,6 @@ p {
 
 nav ul,
 #main {
-	width: 1000px;
+	max-width: 1000px;
 	margin: 0 auto;
 }
