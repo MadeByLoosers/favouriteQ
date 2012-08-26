@@ -408,6 +408,12 @@ nav {
   .question .question_answers .author,
   .collapsable .question_answers .author {
     font-size: 16px; }
+    .question .question_answers .author a,
+    .collapsable .question_answers .author a {
+      color: #fff; }
+      .question .question_answers .author a:hover,
+      .collapsable .question_answers .author a:hover {
+        color: #e41869; }
 
 @media (max-width:480px) {
   /* NAV */
