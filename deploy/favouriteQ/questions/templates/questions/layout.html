@@ -1,17 +1,97 @@
-<!doctype html public "✰">
-<html lang="en-gb">
-    <head>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
     <meta charset="utf-8">
-        <title>FavouriteQ</title>
-        <link type="text/css" rel="stylesheet" media="screen" href="{{STATIC_URL}}questions/css/style.css" media="all">
-    </head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Your Favourite Question</title>
+    <meta name="description" content="">
 
-    <body>
-        <h1>FavouriteQ</h1>
+    <meta name="viewport" content="width=device-width">
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:700,700italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{{STATIC_URL}}questions/css/style.css">
+
+    <script src="{{STATIC_URL}}questions/js/libs/modernizr-2.5.3.min.js"></script>
+</head>
+<body>
+
+    <header>
+
+        <nav>
+            <ul>
+                <li><a href="#about" class="collapsable-trigger">About</a></li>
+                <li><a href="#suggest" class="collapsable-trigger">Suggest a question</a></li>
+                <li class="last"><a href="http://twitter.com/favouriteQ" rel="external">@favouriteQ</a></li>
+            </ul>
+        </nav>
+
+        <h1 id="logo"><span>Q:</span></h1>
+
+    </header>
+
+    <div role="main" id="main">
+
+        <div id="about" class="collapsable">
+            <div class="collapsable-clip">
+                <h2>What is it all about?</h2>
+                <h3><span>Isn’t there a question you’ve always wanted to ask?</span></h3>
+                <p>This is the place to come to ask and answer those questions.</p>
+                <p>From favourite unit of measurement to file format, we ask all those burning questions.</p>
+                <p>Everyday we will be posting a new question out to you.</p>
+                <p>You can reply to these via the best of all the social media networks, Twitter.</p>
+            </div>
+        </div>
+
+        <div id="suggest" class="collapsable">
+            <div class="collapsable-clip">
+                <h2>What is the question you always wanted to ask?</h2>
+                <p>If you have a burning question to ask everyone, please send it to us using the form below. </p>
+                <form action="" method="post">
+                    <fieldset>
+                        <legend>Enter your question</legend>
+
+                        <div class="input-container">
+                            <textarea name="your-question" id="your-question" cols="25" rows="5" placeholder="What is your favourite..." maxlength="130" required></textarea>
+                            <label for="your-question"></label>
+                        </div>
+
+                        <div class="input-container">
+                            <textarea name="your-twitter" id="your-twitter" cols="25" rows="1" placeholder="@your_twitter_handle (optional)" maxlength="32" required pattern="^[A-Za-z0-9_]{1,32}$"></textarea>
+                        </div>
+
+                        <input type="submit" value="Submit" />
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
 
         {% block content %}
         {% endblock %}
 
-        <p>i'm the footer</p>
-    </body>
+
+        <footer>
+
+        </footer>
+
+    </div>
+
+    <script src="{{STATIC_URL}}questions/js/gunt-badge.min.js"></script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{STATIC_URL}}questions/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
+    <script src="{{STATIC_URL}}questions/js/plugins.js"></script>
+    <script src="{{STATIC_URL}}questions/js/script.js"></script>
+
+    <script>
+        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+</body>
 </html>

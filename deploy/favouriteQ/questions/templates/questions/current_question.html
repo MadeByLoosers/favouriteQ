@@ -2,14 +2,20 @@
 
 {% block content %}
 
-<h2>{{ question.question }}</h2>
+  <div class="question">
 
-<p>Answers:</p>
+    <h2 class="question_title"><span>#x</span> {{ question.question }}</h2>
 
-<ul>
-    {% for answer in question.answer_set.all %}
-    <li>{{ answer.answer_text }} <a href="http://www.twitter.com/{{ answer.person }}">{{ answer.person.first_name }} {{ answer.person.surname }}</a></li>
-    {% endfor %}
-</ul>
+    <ul class="question_answers">
+      {% for answer in question.answer_set.all %}
+      <li>
+        <div class="question_answer">
+          <p class="answer">{{ answer.answer_text }}</p>
+          <p class="author">{{ answer.person.first_name }} {{ answer.person.surname }} <a href="http://www.twitter.com/{{ answer.person }}" rel="external">@{{ answer.person }}</a> / {{answer.created_at|date:"g:ia"}}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
 {% endblock %}

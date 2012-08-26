@@ -1,0 +1,43 @@
+/* _base.standard.scss */
+
+body {
+	background: url('../img/pattern_200x200.png') repeat scroll 0 0 #000;
+}
+
+h1, h2, a, p, span {
+	@extend .font-josefin-bold;
+}
+
+h1 {
+	color: #000;
+}
+
+h2, h3 {
+	color: #fff;
+}
+
+a {
+	color: #999;
+	text-decoration: none;
+
+	&:visited {
+		color: #999;
+	}
+
+	&:hover {
+		color: #e41869;
+		text-decoration: underline;
+	}
+}
+
+p {
+	color: #999;
+	padding: 0;
+	margin: 0;
+}
+
+nav ul,
+#main {
+	max-width: 1000px;
+	margin: 0 auto;
+}
