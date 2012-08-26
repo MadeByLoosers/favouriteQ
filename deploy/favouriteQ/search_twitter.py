@@ -27,8 +27,15 @@ def add_to_db(tweet):
     #TODO: move to model as this is duplicated in views.py
     question = Question.objects.order_by('-asked_date').filter(asked_date__isnull=False)[0]
 
-    #TODO check if user is in the DB already
-    person = Person.objects.filter(twitter_username='petexgraham')[0]
+    person = Person.objects.filter(twitter_username=tweet.user.screen_name)
+
+    if not person:
+        print 'person ' + tweet.user.screen_name + ' not in db'
+        person = Person(twitter_username=tweet.user.screen_name)
+        person.save()
+    else:
+        # get person from the query set (inellegent could this be modified)?
+        person = person[0]
 
     # save answer
     # ugly global belowe remove by restructuring with a class

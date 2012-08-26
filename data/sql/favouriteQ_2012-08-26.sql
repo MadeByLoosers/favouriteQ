@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.9-log)
 # Database: favouriteQ
-# Generation Time: 2012-08-26 15:34:21 +0000
+# Generation Time: 2012-08-26 15:59:31 +0000
 # ************************************************************
 
 
@@ -338,6 +338,7 @@ CREATE TABLE `questions_answer` (
   `person_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
+  `tweet_id` bigint(200) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `questions_answer_1f92e550` (`question_id`),
   KEY `questions_answer_21b911c5` (`person_id`),
@@ -348,21 +349,18 @@ CREATE TABLE `questions_answer` (
 LOCK TABLES `questions_answer` WRITE;
 /*!40000 ALTER TABLE `questions_answer` DISABLE KEYS */;
 
-INSERT INTO `questions_answer` (`id`, `question_id`, `answer_text`, `person_id`, `created_at`, `updated_at`)
+INSERT INTO `questions_answer` (`id`, `question_id`, `answer_text`, `person_id`, `created_at`, `updated_at`, `tweet_id`)
 VALUES
-	(1,2,'Stilton',1,'2012-08-25 16:48:38','2012-08-25 16:48:38'),
-	(2,2,'Gouda',4,'2012-08-25 16:49:03','2012-08-25 16:49:03'),
-	(3,2,'I don\'t like cheese',2,'2012-08-25 16:49:16','2012-08-25 16:49:16'),
-	(4,2,'Brie',3,'2012-08-25 16:49:36','2012-08-25 16:49:36'),
-	(5,3,'monkey',1,'2012-08-25 16:49:49','2012-08-25 16:49:49'),
-	(6,3,'tiger',3,'2012-08-25 16:50:28','2012-08-25 16:50:28'),
-	(7,3,'horse',2,'2012-08-25 16:51:12','2012-08-25 16:51:12'),
-	(8,3,'Monkey',4,'2012-08-25 16:51:48','2012-08-25 16:51:48'),
-	(9,3,'Pony',5,'2012-08-25 17:55:22','2012-08-25 17:55:22'),
-	(10,2,'Baby Bells',5,'2012-08-25 18:09:03','2012-08-25 18:09:03'),
-	(26,2,'RT @ldempson: DNC 2012 I am there baby! I have been counting down since we got tix Thursday in Durham HQ @OFA_NC  @DemConvention #DNC2012',1,'2012-08-26 15:19:53','2012-08-26 15:19:53'),
-	(27,2,'RT @EvaLongoria: I\'m honored to speak to a STADIUM full of  supporters at the DNC in Charlotte on Sep 6! Come w/ me: … http://t.co/IiTAN6hi',1,'2012-08-26 15:19:53','2012-08-26 15:19:53'),
-	(28,2,'Whoah! @GOP Florida ex-gov #CharlieCrist endorsed  for President: http://t.co/XlQipwDo. #Election2012',1,'2012-08-26 15:19:53','2012-08-26 15:19:53');
+	(1,2,'Stilton',1,'2012-08-25 16:48:38','2012-08-25 16:48:38',0),
+	(2,2,'Gouda',4,'2012-08-25 16:49:03','2012-08-25 16:49:03',0),
+	(3,2,'I don\'t like cheese',2,'2012-08-25 16:49:16','2012-08-25 16:49:16',0),
+	(4,2,'Brie',3,'2012-08-25 16:49:36','2012-08-25 16:49:36',0),
+	(5,3,'monkey',1,'2012-08-25 16:49:49','2012-08-25 16:49:49',0),
+	(6,3,'tiger',3,'2012-08-25 16:50:28','2012-08-25 16:50:28',0),
+	(7,3,'horse',2,'2012-08-25 16:51:12','2012-08-25 16:51:12',0),
+	(8,3,'Monkey',4,'2012-08-25 16:51:48','2012-08-25 16:51:48',0),
+	(9,3,'Pony',5,'2012-08-25 17:55:22','2012-08-25 17:55:22',0),
+	(10,2,'Baby Bells',5,'2012-08-25 18:09:03','2012-08-25 18:09:03',0);
 
 /*!40000 ALTER TABLE `questions_answer` ENABLE KEYS */;
 UNLOCK TABLES;
