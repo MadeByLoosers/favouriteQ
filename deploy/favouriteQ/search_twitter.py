@@ -24,17 +24,15 @@ tweets = twitter_api.GetSearch(twitter_account, per_page=3)
 
 # should this whole function be in the model?
 def add_to_db(tweet):
-    #TODO: move to model as this is duplicated in views.py
-    question = Question.objects.order_by('-asked_date').filter(asked_date__isnull=False)[0]
-
+    question = Question.objects.get_current_question()
     person = Person.objects.filter(twitter_username=tweet.user.screen_name)
 
     if not person:
-        print 'person ' + tweet.user.screen_name + ' not in db'
+        #print 'person ' + tweet.user.screen_name + ' not in db'
         person = Person(twitter_username=tweet.user.screen_name)
         person.save()
     else:
-        # get person from the query set (inellegent could this be modified)?
+        # get person from the query set. Inelegant could this be modified?
         person = person[0]
 
     # save answer

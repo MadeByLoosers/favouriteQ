@@ -2,6 +2,7 @@ from django.db import models
 
 class QuestionManager(models.Manager):
     def get_current_question(self):
+        # get the question with the most recent asked date (null asked date means question hasn't been asked)
         return self.order_by('-asked_date').filter(asked_date__isnull=False)[0]
 
 
@@ -9,7 +10,8 @@ class Question(models.Model):
     question = models.CharField(max_length=140)
     asked_date = models.DateTimeField(null=True, blank=True) # Null if question hasn't been asked
     priority = models.BooleanField() # deafult to not priority
-    # automatic system fields
+    
+    # System fields
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     objects = QuestionManager()
