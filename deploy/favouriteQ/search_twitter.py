@@ -6,7 +6,7 @@ from django.core.management import execute_from_command_line
 from questions.models import Question, Answer, Person
 # export PYTHONPATH=$PYTHONPATH:/Library/Python/2.7/site-packages
 
-
+#TODO: can this be added to the settings file?
 twitter_api = twitter.Api(consumer_key='X6GT49dzDNiePLCaNIHiAg',
               consumer_secret='4kV5v2DXFUdfYJpa8HalgATLK20zmtU1ZQeWzatw',
               access_token_key='565461060-bnetbvYCncn824yxgamZTbVeJHDu66UKDquFrv0A',
