@@ -6,19 +6,11 @@ from django.core.management import execute_from_command_line
 from questions.models import Question, Answer, Person
 # export PYTHONPATH=$PYTHONPATH:/Library/Python/2.7/site-packages
 
-#TODO: can this be added to the settings file?
-# twitter_api = twitter.Api(consumer_key='X6GT49dzDNiePLCaNIHiAg',
-#               consumer_secret='4kV5v2DXFUdfYJpa8HalgATLK20zmtU1ZQeWzatw',
-#               access_token_key='565461060-bnetbvYCncn824yxgamZTbVeJHDu66UKDquFrv0A',
-#               access_token_secret='ZjNQwRQVbI9RkDXvlQkrAEEbqECIkPZgtwiSvWFS0ok')
 twitter_api = twitter.Api()
-
 twitter_account = '@favouriteQ'
-#twitter_account = '@BarackObama'
 answer = Answer.objects.get_newest_tweet_answer()
 
-#http://search.twitter.com/search.json?q=%40favouriteQ
-#tweets = twitter_api.GetSearch(twitter_account, per_page=100, since_id=answer.tweet_id)
+# Example URL http://search.twitter.com/search.json?q=%40favouriteQ
 tweets = twitter_api.GetSearch(twitter_account, per_page=100, page=1, lang='', since_id=answer.tweet_id)
 
 
@@ -34,12 +26,11 @@ def add_answer_to_db(tweet):
         # get person from the query set. Inelegant could this be modified?
         person = person[0]
 
-    #TODO: ugly global belowe remove by restructuring with a class
+    #TODO: ugly global below remove by restructuring with a class
     # Remove @FavouriteQueston from the tweet
     answer_text = tweet.text[len(twitter_account) + 1:]
     print answer_text + " " + person.twitter_username
 
-    # save answer
     a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
     a.save()
 
@@ -61,21 +52,12 @@ def handle_tweet(tweet):
 
 
 def twitter_at_message_check(string, twitter_account):
-    #TODO: check if this is case sensitive
     start_string = string[0:len(twitter_account)]
     return start_string.lower() == twitter_account.lower()
 
-
-# test code for @ message check
-#string1 = twitter_account + " good reply comment"
-#string2 = "bad mention comment " + twitter_account
-#print twitter_at_message_check(string1, twitter_account)
-#print twitter_at_message_check(string2, twitter_account)
-#sys.exit()
 
 if len(tweets) == 0:
     print 'No new tweets'
 else:
     for tweet in tweets:
-        #print tweet
         handle_tweet(tweet)
