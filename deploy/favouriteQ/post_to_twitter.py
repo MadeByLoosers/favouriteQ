@@ -15,7 +15,6 @@ twitter_api = twitter.Api(consumer_key='X6GT49dzDNiePLCaNIHiAg',
 question = Question.objects.get_new_question()
 #TODO: add try catch here (in case of API failure)
 status = twitter_api.PostUpdate(question.question) #'test python message')
-print status.text
-#question.priority(1)
+#print status.text
 question.asked_date = timezone.now()
 question.save()
