@@ -7,18 +7,19 @@ from questions.models import Question, Answer, Person
 # export PYTHONPATH=$PYTHONPATH:/Library/Python/2.7/site-packages
 
 #TODO: can this be added to the settings file?
-twitter_api = twitter.Api(consumer_key='X6GT49dzDNiePLCaNIHiAg',
-              consumer_secret='4kV5v2DXFUdfYJpa8HalgATLK20zmtU1ZQeWzatw',
-              access_token_key='565461060-bnetbvYCncn824yxgamZTbVeJHDu66UKDquFrv0A',
-              access_token_secret='ZjNQwRQVbI9RkDXvlQkrAEEbqECIkPZgtwiSvWFS0ok')
+# twitter_api = twitter.Api(consumer_key='X6GT49dzDNiePLCaNIHiAg',
+#               consumer_secret='4kV5v2DXFUdfYJpa8HalgATLK20zmtU1ZQeWzatw',
+#               access_token_key='565461060-bnetbvYCncn824yxgamZTbVeJHDu66UKDquFrv0A',
+#               access_token_secret='ZjNQwRQVbI9RkDXvlQkrAEEbqECIkPZgtwiSvWFS0ok')
+twitter_api = twitter.Api()
 
-
-#twitter_account = '@favouriteQ'
-twitter_account = '@BarackObama'
+twitter_account = '@favouriteQ'
+#twitter_account = '@BarackObama'
 answer = Answer.objects.get_newest_tweet_answer()
 
-#TODO: increase number of tweets fetched
-tweets = twitter_api.GetSearch(twitter_account, per_page=3, since_id=answer.tweet_id)
+#http://search.twitter.com/search.json?q=%40favouriteQ
+#tweets = twitter_api.GetSearch(twitter_account, per_page=100, since_id=answer.tweet_id)
+tweets = twitter_api.GetSearch(twitter_account, per_page=100, page=1, lang='', since_id=answer.tweet_id)
 
 
 def add_answer_to_db(tweet):
@@ -35,8 +36,10 @@ def add_answer_to_db(tweet):
 
     # save answer
     #TODO: ugly global belowe remove by restructuring with a class
-    answer_text = tweet.text.replace(twitter_account, "")
-    #TODO: Do we need to filter out retweets? Once regex is in we should be ok
+    answer_text = tweet.text.replace(twitter_account + " ", "")
+    print answer_text 
+    print person
+
     a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
     a.save()
 
@@ -44,8 +47,10 @@ def add_answer_to_db(tweet):
 #TODO? move to it's own file/class/module?
 def handle_tweet(tweet):
     # check if it's just a mention or an actual @ message
-    if twitter_at_message_check(string1, twitter_account):
+    if twitter_at_message_check(tweet.text, twitter_account):
         add_answer_to_db(tweet)
+    else:
+        print "not at message " + tweet.text
     #TODO: does it contain a #q123 archive answer hashtag
     #var matches = tweet.text.match(/#q\d+$/i);
     # add_answer(tweet, question_id?)
@@ -56,8 +61,9 @@ def handle_tweet(tweet):
 
 
 def twitter_at_message_check(string, twitter_account):
+    #TODO: check if this is case sensitive
     start_string = string[0:len(twitter_account)]
-    return start_string == twitter_account
+    return start_string.lower() == twitter_account.lower()
 
 
 # test code for @ message check
@@ -71,4 +77,5 @@ if len(tweets) == 0:
     print 'No new tweets'
 else:
     for tweet in tweets:
+        #print tweet
         handle_tweet(tweet)
