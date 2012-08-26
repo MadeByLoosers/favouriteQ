@@ -5,6 +5,9 @@ class QuestionManager(models.Manager):
         # get the question with the most recent asked date (null asked date means question hasn't been asked)
         return self.order_by('-asked_date').filter(asked_date__isnull=False)[0]
 
+    def get_new_question(self):
+        return self.order_by('-asked_date').filter(asked_date__isnull=False)[0]
+
 
 class Question(models.Model):
     question = models.CharField(max_length=140)

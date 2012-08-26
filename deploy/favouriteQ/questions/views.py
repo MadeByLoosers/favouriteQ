@@ -1,7 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from questions.models import Question, Answer
-#import sys
 
 def current_question(request):
     question = Question.objects.get_current_question()
