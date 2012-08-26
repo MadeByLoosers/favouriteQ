@@ -7,7 +7,7 @@ from django.core.management import execute_from_command_line
 
 # export PYTHONPATH=$PYTHONPATH:/Library/Python/2.7/site-packages
 import twitter
-from questions.models import Question, Answer
+from questions.models import Question, Answer, Person
 
 
 twitter_api = twitter.Api(consumer_key='X6GT49dzDNiePLCaNIHiAg',
@@ -23,19 +23,20 @@ tweets = twitter_api.GetSearch('@BarackObama', per_page=3)
 
 def add_to_db(tweet):
     # get todays question
-    queston_id = 3
+    #TODO: move to model as this is duplicated in views.py
+    question = Question.objects.order_by('-asked_date').filter(asked_date__isnull=False)[0]
 
     # check if user is in the DB already
-    person_id = 1
-
+    person = Person.objects.filter(twitter_username='petexgraham')[0]
+    print person
     # save answer
-    a = Answer(answer_text="python script test", person=person_id, question=question_id)
+    a = Answer(answer_text="python script test", person=person, question=question)
     a.save()
 
 
 #TODO? move to it's own file/class/module?
 def handle_tweet(tweet):
-    print "in function: " + tweet.text
+    #print "in function: " + tweet.text
     add_to_db(tweet)
     # add results to DB (check they don't exist already)
 
