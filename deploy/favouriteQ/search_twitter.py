@@ -61,11 +61,11 @@ def twitter_at_message_check(string, twitter_account):
 
 
 # test code for @ message check
-string1 = twitter_account + " good reply comment"
-string2 = "bad mention comment " + twitter_account
-print twitter_at_message_check(string1, twitter_account)
-print twitter_at_message_check(string2, twitter_account)
-sys.exit()
+#string1 = twitter_account + " good reply comment"
+#string2 = "bad mention comment " + twitter_account
+#print twitter_at_message_check(string1, twitter_account)
+#print twitter_at_message_check(string2, twitter_account)
+#sys.exit()
 
 if len(tweets) == 0:
     print 'No new tweets'
