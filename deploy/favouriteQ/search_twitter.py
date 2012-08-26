@@ -31,22 +31,17 @@ def add_to_db(tweet):
     person = Person.objects.filter(twitter_username='petexgraham')[0]
 
     # save answer
-    #TODO: strip @favouriteQ from the message (how to get variable here?)
-    #answer_text = tweet.text
     # ugly global belowe remove by restructuring with a class
     answer_text = tweet.text.replace(twitter_account, "")
-    #print answer_text
-    #print len(answer_text)
     # Do we need to filter out retweets?
-
-    a = Answer(answer_text=answer_text, person=person, question=question)
+    #print tweet
+    a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
     a.save()
 
 
 #TODO? move to it's own file/class/module?
 def handle_tweet(tweet):
-    #print twitter_account
-    #sys.exit(0)
+    # TODO: regex from node need to go here
     add_to_db(tweet)
 
 
