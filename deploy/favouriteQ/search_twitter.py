@@ -34,12 +34,12 @@ def add_answer_to_db(tweet):
         # get person from the query set. Inelegant could this be modified?
         person = person[0]
 
-    # save answer
     #TODO: ugly global belowe remove by restructuring with a class
-    answer_text = tweet.text.replace(twitter_account + " ", "")
-    print answer_text 
-    print person
+    # Remove @FavouriteQueston from the tweet
+    answer_text = tweet.text[len(twitter_account) + 1:]
+    print answer_text + " " + person.twitter_username
 
+    # save answer
     a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
     a.save()
 
@@ -50,7 +50,7 @@ def handle_tweet(tweet):
     if twitter_at_message_check(tweet.text, twitter_account):
         add_answer_to_db(tweet)
     else:
-        print "not at message " + tweet.text
+        print "NO A AT MESSAGE: " + tweet.text
     #TODO: does it contain a #q123 archive answer hashtag
     #var matches = tweet.text.match(/#q\d+$/i);
     # add_answer(tweet, question_id?)
