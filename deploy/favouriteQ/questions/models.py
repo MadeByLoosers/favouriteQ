@@ -36,6 +36,11 @@ class Person(models.Model):
         verbose_name_plural = "People"
 
 
+class AnswerManager(models.Manager):
+    def get_newest_tweet_answer(self):
+        return self.order_by('-tweet_id')[0]#.filter(asked_date__isnull=False)[0]
+
+
 class Answer(models.Model):
     question = models.ForeignKey(Question)
     answer_text = models.CharField(max_length=200) # Increased due to strange tweets with more than 140 characters
@@ -45,6 +50,7 @@ class Answer(models.Model):
     # automatic system fields
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+    objects = AnswerManager()
 
     def __unicode__(self):
         return self.answer_text

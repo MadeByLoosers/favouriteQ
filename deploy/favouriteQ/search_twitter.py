@@ -19,7 +19,10 @@ twitter_api = twitter.Api(consumer_key='X6GT49dzDNiePLCaNIHiAg',
 #TODO: only get new tweets, store last ID somwhere DB.
 #tweets = twitter_api.GetSearch('@favouriteQ', per_page=20)
 twitter_account = '@BarackObama'
-tweets = twitter_api.GetSearch(twitter_account, per_page=3)
+answer = Answer.objects.get_newest_tweet_answer()
+#print answer.tweet_id
+#sys.exit(0)
+tweets = twitter_api.GetSearch(twitter_account, per_page=3, since_id=answer.tweet_id)
 
 
 # should this whole function be in the model?
