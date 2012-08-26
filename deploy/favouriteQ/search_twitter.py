@@ -41,7 +41,6 @@ def add_to_db(tweet):
     # ugly global belowe remove by restructuring with a class
     answer_text = tweet.text.replace(twitter_account, "")
     # Do we need to filter out retweets?
-    #print tweet
     a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
     a.save()
 
