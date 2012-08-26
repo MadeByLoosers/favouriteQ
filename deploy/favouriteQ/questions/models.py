@@ -28,7 +28,7 @@ class Person(models.Model):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question)
-    answer_text = models.CharField(max_length=140) # should it be less as will include @favouriteQ? possibly allow non-twitter answering in future
+    answer_text = models.CharField(max_length=200) # Increased due to strange tweets with more than 140 characters
     person = models.ForeignKey(Person)
     # automatic system fields
     created_at = models.DateTimeField(auto_now_add = True)
