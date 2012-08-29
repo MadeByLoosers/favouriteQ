@@ -152,3 +152,8 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from localsettings.localsettings import *
+except:
+    pass
