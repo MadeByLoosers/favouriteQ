@@ -17,3 +17,4 @@ results
 *.pyc
 
 /env/
+/.DS_Store
