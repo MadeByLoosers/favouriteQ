@@ -50,6 +50,7 @@
                 <h2>What is the question you always wanted to ask?</h2>
                 <p>If you have a burning question to ask everyone, please send it to us using the form below. </p>
                 <form action="" method="post">
+                    {% csrf_token %}
                     <fieldset>
                         <legend>Enter your question</legend>
 
@@ -59,7 +60,7 @@
                         </div>
 
                         <div class="input-container">
-                            <textarea name="your-twitter" id="your-twitter" cols="25" rows="1" placeholder="@your_twitter_handle (optional)" maxlength="32" required pattern="^[A-Za-z0-9_]{1,32}$"></textarea>
+                            <textarea name="your-twitter" id="your-twitter" cols="25" rows="1" placeholder="@your_twitter_handle (optional)" maxlength="20"></textarea>
                         </div>
 
                         <input type="submit" value="Submit" />

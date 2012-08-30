@@ -6,6 +6,11 @@ from forms import QuestionForm
 from questions.models import Question, Answer
 
 def current_question(request):
+    if request.method == 'POST':
+        # this is probably a bit hacky accessing the post here
+        q = Question(question=request.POST['your-question'], approved=False)
+        q.save()
+
     question = Question.objects.get_current_question()
     return render_to_response('questions/current_question.html', {"question": question}, context_instance=RequestContext(request))
 
