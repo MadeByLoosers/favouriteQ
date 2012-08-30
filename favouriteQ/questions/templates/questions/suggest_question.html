@@ -2,6 +2,24 @@
 
 {% block content %}
 
-<h2>Suggest a question form will go here</h2>
+<h2>What is the question you always wanted to ask?</h2>
+
+<form action="" method="post">
+    {% csrf_token %}
+
+    <div class="field">
+        {{ form.question.errors }}
+        <label for="id_question">Question:</label>
+        {{ form.question }}
+    </div>
+
+    <div class="field">
+        {{ form.twitter_user.errors }}
+        <label for="id_question">Twitter User:</label>
+        {{ form.twitter_user }}
+    </div>
+
+    <input type="submit" value="Submit">
+</form>
 
 {% endblock %}
