@@ -3,14 +3,14 @@ from django.db import models
 class QuestionManager(models.Manager):
     def get_current_question(self):
         # get the question with the most recent asked date (null asked date means question hasn't been asked)
-        return self.order_by('-asked_date').filter(asked_date__isnull=False)[0]
+        return self.order_by('-asked_date').filter(asked_date__isnull=False, approved=1)[0]
 
     def get_new_question(self):
         # get priority questions first
-        questions = self.order_by('?').filter(asked_date__isnull=True, priority=1)
+        questions = self.order_by('?').filter(asked_date__isnull=True, priority=1, approved=1)
         # no priority questions then get from non-priority
         if not questions:
-            questions = self.order_by('?').filter(asked_date__isnull=True, priority=0)
+            questions = self.order_by('?').filter(asked_date__isnull=True, priority=0, approved=1)
         return questions[0]
 
 
