@@ -13,8 +13,8 @@ def suggest_question(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
-            #q = Question(question=form.cleaned_data['question'], pub_date=timezone.now())
-            #q.save()
+            q = Question(question=form.cleaned_data['question'], approved=False) # default priority to False
+            q.save()
             return HttpResponseRedirect(reverse('questions.views.suggest_question_processed'))
     else:
         form = QuestionForm()
