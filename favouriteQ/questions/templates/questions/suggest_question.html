@@ -7,17 +7,7 @@
 <form action="" method="post">
     {% csrf_token %}
 
-    <div class="field">
-        {{ form.question.errors }}
-        <label for="id_question">Question:</label>
-        {{ form.question }}
-    </div>
-
-    <div class="field">
-        {{ form.twitter_user.errors }}
-        <label for="id_question">Twitter User:</label>
-        {{ form.twitter_user }}
-    </div>
+    {{ form.as_p }}
 
     <input type="submit" value="Submit">
 </form>
