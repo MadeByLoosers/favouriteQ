@@ -18,6 +18,7 @@ class Question(models.Model):
     question = models.CharField(max_length=140)
     asked_date = models.DateTimeField(null=True, blank=True) # Null if question hasn't been asked
     priority = models.BooleanField() # deafult to not priority
+    approved = models.BooleanField()
     
     # System fields
     created_at = models.DateTimeField(auto_now_add = True)
