@@ -1,3 +1,5 @@
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from forms import QuestionForm
@@ -13,7 +15,10 @@ def suggest_question(request):
         if form.is_valid():
             #q = Question(question=form.cleaned_data['question'], pub_date=timezone.now())
             #q.save()
-            return HttpResponseRedirect(reverse('question_suggested'))
+            return HttpResponseRedirect(reverse('questions.views.suggest_question_processed'))
     else:
         form = QuestionForm()
     return render_to_response('questions/suggest_question.html', {'form': form}, context_instance=RequestContext(request))
+
+def suggest_question_processed(request):
+    return render_to_response('questions/suggest_question_processed.html', context_instance=RequestContext(request))

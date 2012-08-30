@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'questions.views.current_question'),
     url(r'^suggest-a-question$', 'questions.views.suggest_question'),
+    url(r'^thanks$', 'questions.views.suggest_question_processed'),
 )
