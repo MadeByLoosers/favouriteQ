@@ -19,3 +19,4 @@ results
 /env/
 /.DS_Store
 /favouriteQ/favouriteQ/localsettings/localsettings.py
+/favouriteQ/questions/static/questions/.sass-cache/

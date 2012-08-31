@@ -9,20 +9,50 @@
 		line-height: 46px;
 	}
 
-	h2 {
+	#questionbox {
+
+		.tweet {
+			@extend .font-josefin-bold-italic;
+			color:#fff;
+			font-size: 18px;
+			width: 500px;
+			text-align: center;
+			border-bottom: 10px solid #e41869;
+			margin: 0 auto;
+			clear:both;
+			overflow:hidden;
+			padding-bottom: 20px;
+
+			span, iframe {
+				float:left;
+
+			}
+
+			span {
+				margin:0 10px 0 100px;
+
+			}
+			iframe {
+				margin-top: 3px;
+			}
+		}
+
+		h2 {
 		max-width: 500px;
 		margin: 0 auto;
-		border-bottom: 10px solid #e41869;
+
 		position: relative;
 		text-align: center;
 		padding-bottom: 22px;
 
-		span {
-			@extend .font-josefin-bold-italic;
-			color: #999;
-			padding-right: 18px;
+			span {
+				@extend .font-josefin-bold-italic;
+				color: #999;
+				padding-right: 18px;
+			}
 		}
 	}
+
 
 	h3 {
 		@extend .font-josefin-bold-italic;
