@@ -9,4 +9,7 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = os.path.join(PROJECT_PATH, "static")+'/'
+import os
+PROJECT_PATH=os.path.dirname(__file__)
+
+STATIC_ROOT = os.path.join(PROJECT_PATH, "../../static")+'/'
