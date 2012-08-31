@@ -47,7 +47,7 @@ class Person(models.Model):
 
 class AnswerManager(models.Manager):
     def get_newest_tweet_answer(self):
-        return self.order_by('-tweet_id')[0]#.filter(asked_date__isnull=False)[0]
+        return self.order_by('-tweet_id')[0]
 
 
 class Answer(models.Model):
