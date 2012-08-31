@@ -215,15 +215,17 @@ td {
   padding: 0.2em 0; }
 
 /* _base.typography.scss */
-.font-josefin-bold, .font-josefin-bold-italic, .question h2 span,
-.collapsable h2 span, .question h3,
+.font-josefin-bold, .font-josefin-bold-italic, .question #questionbox .tweet,
+.collapsable #questionbox .tweet, .question #questionbox h2 span,
+.collapsable #questionbox h2 span, .question h3,
 .collapsable h3, h1, h2, a, p, span, form, form textarea,
 form input[type="text"], form input[type="submit"], nav ul li:before, #logo {
   font-family: 'Josefin Slab', serif;
   font-weight: bold; }
 
-.font-josefin-bold-italic, .question h2 span,
-.collapsable h2 span, .question h3,
+.font-josefin-bold-italic, .question #questionbox .tweet,
+.collapsable #questionbox .tweet, .question #questionbox h2 span,
+.collapsable #questionbox h2 span, .question h3,
 .collapsable h3 {
   font-style: italic; }
 
@@ -379,16 +381,36 @@ nav {
 .collapsable .question_answers .answer {
   font-size: 40px;
   line-height: 46px; }
-.question h2,
-.collapsable h2 {
+.question #questionbox .tweet,
+.collapsable #questionbox .tweet {
+  color: #fff;
+  font-size: 18px;
+  width: 500px;
+  text-align: center;
+  border-bottom: 10px solid #e41869;
+  margin: 0 auto;
+  clear: both;
+  overflow: hidden;
+  padding-bottom: 20px; }
+  .question #questionbox .tweet span, .question #questionbox .tweet iframe,
+  .collapsable #questionbox .tweet span,
+  .collapsable #questionbox .tweet iframe {
+    float: left; }
+  .question #questionbox .tweet span,
+  .collapsable #questionbox .tweet span {
+    margin: 0 10px 0 100px; }
+  .question #questionbox .tweet iframe,
+  .collapsable #questionbox .tweet iframe {
+    margin-top: 3px; }
+.question #questionbox h2,
+.collapsable #questionbox h2 {
   max-width: 500px;
   margin: 0 auto;
-  border-bottom: 10px solid #e41869;
   position: relative;
   text-align: center;
   padding-bottom: 22px; }
-  .question h2 span,
-  .collapsable h2 span {
+  .question #questionbox h2 span,
+  .collapsable #questionbox h2 span {
     color: #999;
     padding-right: 18px; }
 .question h3,
