@@ -1,0 +1,72 @@
+form {
+
+  @extend .font-josefin-bold;
+
+  legend {
+    display:none;
+  }
+
+  fieldset {
+    border:0;
+  }
+
+  label {
+    color:#fff;
+    text-align:right;
+    display:block;
+  }
+
+  textarea,
+  input[type="text"] {
+    @extend .font-josefin-bold;
+    background:#e41869;
+    border:none;
+    padding:10px;
+    font-size:18px;
+    color:#fff;
+    outline:none;
+    width:100%;
+    margin:10px auto;
+    resize: none;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+
+  input[type="submit"] {
+    @extend .font-josefin-bold;
+    -webkit-appearance: none;
+    padding:0;
+    background:none;
+    border:none;
+    font-size:40px;
+    text-align:center;
+    margin:0 auto;
+    color:#fff;
+    display:block;
+    border-bottom:5px solid #fff;
+
+    &:hover {
+      color:#ccc;
+      border-bottom-color:#ccc;
+    }
+  }
+
+  ::-webkit-input-placeholder {
+    color: #ccc;
+  }
+
+  :-moz-placeholder {
+     color: #ccc;
+  }
+
+  input:invalid,
+  textarea:invalid {
+    background-color:#e41869;
+  }
+
+  .input-container {
+    width:100%;
+    margin:20px auto;
+  }
+}

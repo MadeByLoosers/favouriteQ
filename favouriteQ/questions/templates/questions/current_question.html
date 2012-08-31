@@ -1,0 +1,21 @@
+{% extends 'questions/layout.html' %}
+
+{% block content %}
+
+  <div class="question">
+
+    <h2 class="question_title"><span>#x</span> {{ question.question }}</h2>
+
+    <ul class="question_answers">
+      {% for answer in question.answer_set.all %}
+      <li>
+        <div class="question_answer">
+          <p class="answer">{{ answer.answer_text }}</p>
+          <p class="author">{{ answer.person.first_name }} {{ answer.person.surname }} <a href="http://www.twitter.com/{{ answer.person }}" rel="external">@{{ answer.person }}</a> / {{answer.created_at|date:"g:ia"}}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+{% endblock %}
