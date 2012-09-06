@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'questions.views.current_question'),
     url(r'^archive$', 'questions.views.archive'),
+    url(r'^archive/(?P<question_id>\d+)$', 'questions.views.detail'),
 )

@@ -10,7 +10,7 @@
       {% for question in questions %}
       <li>
         <div class="question_answer">
-          <p class="answer"><a href="#">#{{ question.id}} {{ question.question }}</a></p>
+          <p class="answer"><a href="{% url questions.views.detail question.id %}">#{{ question.id}} {{ question.question }}</a></p>
           <p class="author">
             {{ question.asked_date|date:"jS \o\f F o" }}
             <br/>
