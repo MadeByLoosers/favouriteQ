@@ -12,9 +12,13 @@ def current_question(request):
             q = Question(question=form.cleaned_data['question'], approved=False)
             q.save()
         else:
-            # shouldn't be reached accept if JS validation is bypassed
+            # shouldn't be reached accept if HTML5 validation is bypassed
             print "form not valid"
+    else:
+        form = QuestionForm()
 
-    form = QuestionForm()
     question = Question.objects.get_current_question()
-    return render_to_response('questions/current_question.html', {"question": question, "form": form, "test": "1234"}, context_instance=RequestContext(request))
+    return render_to_response('questions/current_question.html', {"question": question, "form": form}, context_instance=RequestContext(request))
+
+def archive(request):
+    return render_to_response('questions/archive.html', {}, context_instance=RequestContext(request))
