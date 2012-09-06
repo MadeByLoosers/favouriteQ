@@ -7,11 +7,15 @@
     <div id="questionbox">
       <h2 class="question_title">Question Archive</h2>
     <ul class="question_answers">
-      {% for answer in question.answer_set.all %}
+      {% for question in questions %}
       <li>
         <div class="question_answer">
-          <p class="answer">{{ answer.answer_text }}</p>
-          <p class="author">{{ answer.person.name }} <a href="http://www.twitter.com/{{ answer.person }}" rel="external">@{{ answer.person }}</a> / {{answer.created_at|date:"g:ia"}}</p>
+          <p class="answer"><a href="#">#{{ question.id}} {{ question.question }}</a></p>
+          <p class="author">
+            {{ question.asked_date|date:"jS \o\f F o" }}
+            <br/>
+            {{ question.answer_set.count }} answers
+          </p>
         </div>
       </li>
       {% endfor %}

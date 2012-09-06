@@ -21,4 +21,5 @@ def current_question(request):
     return render_to_response('questions/current_question.html', {"question": question, "form": form}, context_instance=RequestContext(request))
 
 def archive(request):
-    return render_to_response('questions/archive.html', {}, context_instance=RequestContext(request))
+    questions = Question.objects.order_by('-asked_date').filter(asked_date__isnull=False)
+    return render_to_response('questions/archive.html', {"questions": questions}, context_instance=RequestContext(request))
