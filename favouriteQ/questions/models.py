@@ -41,6 +41,10 @@ class Person(models.Model):
     def __unicode__(self):
         return self.twitter_username
 
+    def _name(self):
+        return '%s %s' % (self.first_name, self.surname)
+    name = property(_name)
+
     class Meta:
         verbose_name_plural = "People"
 
