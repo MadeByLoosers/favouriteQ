@@ -55,13 +55,12 @@
                         <legend>Enter your question</legend>
 
                         <div class="input-container">
-                            <!--<textarea name="question" id="question" cols="25" rows="5" placeholder="What is your favourite..." maxlength="130" required></textarea>-->
                             {{ form.question }}
                             <label for="question"></label>
                         </div>
 
                         <div class="input-container">
-                            <textarea name="twitter_user" id="twitter_user" cols="25" rows="1" placeholder="@your_twitter_handle (optional)" maxlength="20"></textarea>
+                            {{ form.twitter_user }}
                         </div>
 
                         <input type="submit" value="Submit" />
