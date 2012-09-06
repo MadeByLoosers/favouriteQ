@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from forms import QuestionForm
@@ -39,5 +40,5 @@ def detail(request, question_id):
     else:
         form = QuestionForm()
 
-    question = get_object_or_404(Question, pk=question_id)  # check it's been asked here
+    question = get_object_or_404(Question, Q(asked_date__isnull=False), pk=question_id)  # check it's been asked here
     return render_to_response('questions/current_question.html', {"question": question, "form": form}, context_instance=RequestContext(request))
