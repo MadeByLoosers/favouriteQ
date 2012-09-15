@@ -2,6 +2,7 @@
 
 body {
 	background: url('../img/pattern_200x200.png') repeat scroll 0 0 #000;
+	padding-bottom:25px;
 }
 
 h1, h2, a, p, span {
@@ -26,7 +27,7 @@ a {
 
 	&:hover {
 		color: #e41869;
-		text-decoration: underline;
+		//text-decoration: underline;
 	}
 }
 
