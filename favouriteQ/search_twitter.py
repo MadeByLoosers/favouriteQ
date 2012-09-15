@@ -2,12 +2,16 @@ import os
 import sys
 import twitter
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "favouriteQ.settings")
-from django.core.management import execute_from_command_line
 from questions.models import Question, Answer, Person
-# export PYTHONPATH=$PYTHONPATH:/Library/Python/2.7/site-packages
+from django.conf import settings
 
-twitter_api = twitter.Api()
-twitter_account = '@favouriteQ'
+
+twitter_api = twitter.Api(consumer_key=settings.TWITTER_API['consumer_key'],
+              consumer_secret=settings.TWITTER_API['consumer_secret'],
+              access_token_key=settings.TWITTER_API['access_token_key'],
+              access_token_secret=settings.TWITTER_API['access_token_secret'])
+twitter_account = settings.TWITTER_USER
+
 answer = Answer.objects.get_newest_tweet_answer()
 
 # Example URL http://search.twitter.com/search.json?q=%40favouriteQ
