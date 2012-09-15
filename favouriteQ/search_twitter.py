@@ -34,7 +34,8 @@ def add_answer_to_db(tweet):
     #TODO: ugly global below remove by restructuring with a class
     # Remove @FavouriteQueston from the tweet (+2 is for @ and space)
     answer_text = tweet.text[len(twitter_account) + 2:]
-    print answer_text + " " + person.twitter_username
+    #TODO: add a try catch here incase they are unprintable characters
+    #print answer_text + " " + person.twitter_username
     # Decode HTML encoded entities from Twitter
     h = HTMLParser.HTMLParser()
     answer_text = h.unescape(answer_text)
