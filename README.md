@@ -25,6 +25,12 @@ Create virtual environment
 ```
 virtualenv --no-site-packages env
 ```
+
+(if you don't have virtualenv, install it: `sudo pip install virtualenv`)
+
+(if you don't have pip, install it: `sudo easy_install pip`)
+
+
 Activate virtual environment
 
 ```
@@ -49,3 +55,5 @@ From the root
 cd favouriteQ
 python manage.py runserver
 ```
+
+Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in a browser
