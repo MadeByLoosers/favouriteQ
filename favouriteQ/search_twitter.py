@@ -1,6 +1,7 @@
 import os
 import sys
 import twitter
+import HTMLParser
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "favouriteQ.settings")
 from questions.models import Question, Answer, Person
 from django.conf import settings
@@ -34,6 +35,10 @@ def add_answer_to_db(tweet):
     # Remove @FavouriteQueston from the tweet
     answer_text = tweet.text[len(twitter_account) + 1:]
     print answer_text + " " + person.twitter_username
+    h = HTMLParser.HTMLParser()
+    answer_text = h.unescape(answer_text)
+    #print answer_text
+    #sys.exit(0)
 
     a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
     a.save()
