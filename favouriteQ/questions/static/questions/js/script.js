@@ -10,7 +10,7 @@
     $('.collapsable-trigger').on('click', toggleCollapsableArea);
 
     // add a character count to the
-    countCharacters('#your-question');
+    countCharacters('#id_question');
   });
 
 
