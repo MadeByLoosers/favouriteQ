@@ -20,6 +20,13 @@ Another [Gunt London](http://guntlondon.com) production
 
 ###Virtual environment
 
+Create virtual environment
+
+```
+virtualenv --no-site-packages env
+```
+Activate virtual environment
+
 ```
 source env/bin/activate
 ```
