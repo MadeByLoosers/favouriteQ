@@ -11,6 +11,10 @@
 
     // add a character count to the
     countCharacters('#id_question');
+
+    // check whether we have deep-linked to a section
+    checkDeeplink();
+    $(window).bind('hashchange', checkDeeplink);
   });
 
 
@@ -76,6 +80,24 @@
       counter.innerHTML = (limit-length)+" characters remaining";
     }
     countChars();
+  }
+
+
+  // check for deeplinks
+  function checkDeeplink() {
+
+    // check for hash
+    var hash = window.location.hash;
+    if (!!hash && hash.length > 0) {
+
+      // hash is found, is it a link to a collapsable area?
+      var linkTrigger = $("header nav a[href="+hash+"]");
+
+      // link found, click it (to open the panel)
+      if (linkTrigger.length > 0) {
+        linkTrigger.click();
+      }
+    }
   }
 
 })();
