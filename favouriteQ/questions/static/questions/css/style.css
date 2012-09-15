@@ -403,6 +403,15 @@ nav {
   .question #questionbox .tweet iframe,
   .collapsable #questionbox .tweet iframe {
     margin-top: 3px; }
+.question #questionbox .divider,
+.collapsable #questionbox .divider {
+  max-width: 500px;
+  text-align: center;
+  border-bottom: 10px solid #e41869;
+  margin: 0 auto;
+  clear: both;
+  overflow: hidden;
+  padding-bottom: 20px; }
 .question #questionbox h2,
 .collapsable #questionbox h2 {
   max-width: 500px;

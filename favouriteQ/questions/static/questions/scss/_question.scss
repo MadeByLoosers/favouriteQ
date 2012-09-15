@@ -38,6 +38,16 @@
 			}
 		}
 
+		.divider {
+			max-width: 500px;
+			text-align: center;
+			border-bottom: 10px solid #e41869;
+			margin: 0 auto;
+			clear:both;
+			overflow:hidden;
+			padding-bottom: 20px;
+		}
+
 		h2 {
 		max-width: 500px;
 		margin: 0 auto;

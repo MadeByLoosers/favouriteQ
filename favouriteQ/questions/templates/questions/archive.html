@@ -6,20 +6,22 @@
 
     <div id="questionbox">
       <h2 class="question_title">Question Archive</h2>
-    <ul class="question_answers">
-      {% for question in questions %}
-      <li>
-        <div class="question_answer">
-          <p class="answer"><a href="{% url questions.views.detail question.id %}">#{{ question.id}} {{ question.question }}</a></p>
-          <p class="author">
-            {{ question.asked_date|date:"jS \o\f F o" }}
-            <br/>
-            {{ question.answer_set.count }} answers
-          </p>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
+      <div class="divider"></div>
+      <ul class="question_answers">
+        {% for question in questions %}
+        <li>
+          <div class="question_answer">
+            <p class="answer"><a href="{% url questions.views.detail question.id %}">#{{ question.id}} {{ question.question }}</a></p>
+            <p class="author">
+              {{ question.asked_date|date:"jS \o\f F o" }}
+              <br/>
+              {{ question.answer_set.count }} answers
+            </p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
 
 {% endblock %}
