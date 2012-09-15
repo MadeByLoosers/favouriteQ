@@ -1,4 +1,6 @@
-# Django settings for favouriteQ project.
+# Default shared settings for project
+# Django settings for project production and other enviorment setttings can be
+# found in private Bitbucket repo
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,7 +13,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'favouriteQ',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': 'root',                  # Not used with sqlite3.
@@ -153,11 +155,13 @@ LOGGING = {
 }
 
 TWITTER_API = {
-    'consumer_key': 'X6GT49dzDNiePLCaNIHiAg',
-    'consumer_secret': '4kV5v2DXFUdfYJpa8HalgATLK20zmtU1ZQeWzatw',
-    'access_token_key': '565461060-bnetbvYCncn824yxgamZTbVeJHDu66UKDquFrv0A',
-    'access_token_secret': 'ZjNQwRQVbI9RkDXvlQkrAEEbqECIkPZgtwiSvWFS0ok'
+    'consumer_key': '',
+    'consumer_secret': '',
+    'access_token_key': '',
+    'access_token_secret': ''
 }
+
+TWITTER_USER = 'FavouriteQ'
 
 try:
     from localsettings.localsettings import *
