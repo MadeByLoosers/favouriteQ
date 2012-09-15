@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from forms import QuestionForm
 from questions.models import Question
+from django.conf import settings
 
 
 def current_question(request):
@@ -18,13 +19,19 @@ def current_question(request):
         form = QuestionForm()
 
     question = Question.objects.get_current_question()
-    return render_to_response('questions/current_question.html', {"question": question, "form": form, "current": True}, context_instance=RequestContext(request))
+    return render_to_response(
+        'questions/current_question.html',
+        {"question": question, "form": form, "current": True, "twitter_account": settings.TWITTER_USER},
+        context_instance=RequestContext(request))
 
 
 def archive(request):
     form = QuestionForm()
     questions = Question.objects.order_by('-asked_date').filter(asked_date__isnull=False)
-    return render_to_response('questions/archive.html', {"questions": questions, "form": form}, context_instance=RequestContext(request))
+    return render_to_response(
+        'questions/archive.html',
+        {"questions": questions, "form": form, "twitter_account": settings.TWITTER_USER},
+        context_instance=RequestContext(request))
 
 
 def detail(request, question_id):

@@ -32,8 +32,8 @@ def add_answer_to_db(tweet):
         person = person[0]
 
     #TODO: ugly global below remove by restructuring with a class
-    # Remove @FavouriteQueston from the tweet
-    answer_text = tweet.text[len(twitter_account) + 1:]
+    # Remove @FavouriteQueston from the tweet (+2 is for @ and space)
+    answer_text = tweet.text[len(twitter_account) + 2:]
     print answer_text + " " + person.twitter_username
     # Decode HTML encoded entities from Twitter
     h = HTMLParser.HTMLParser()
@@ -49,7 +49,7 @@ def handle_tweet(tweet):
     if twitter_at_message_check(tweet.text, twitter_account):
         add_answer_to_db(tweet)
     else:
-        print "NO A AT MESSAGE: " + tweet.text
+        print "NOT A AT MESSAGE: " + tweet.text
     #TODO: does it contain a #q123 archive answer hashtag
     #var matches = tweet.text.match(/#q\d+$/i);
     # add_answer(tweet, question_id?)
@@ -60,6 +60,7 @@ def handle_tweet(tweet):
 
 
 def twitter_at_message_check(string, twitter_account):
+    twitter_account = '@' + twitter_account
     start_string = string[0:len(twitter_account)]
     return start_string.lower() == twitter_account.lower()
 
