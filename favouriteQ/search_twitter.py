@@ -28,17 +28,16 @@ def add_answer_to_db(tweet):
         person = Person(twitter_username=tweet.user.screen_name)
         person.save()
     else:
-        # get person from the query set. Inelegant could this be modified?
+        # get person from the query set. Inelegant could this be modified with custom save() on the model
         person = person[0]
 
     #TODO: ugly global below remove by restructuring with a class
     # Remove @FavouriteQueston from the tweet
     answer_text = tweet.text[len(twitter_account) + 1:]
     print answer_text + " " + person.twitter_username
+    # Decode HTML encoded entities from Twitter
     h = HTMLParser.HTMLParser()
     answer_text = h.unescape(answer_text)
-    #print answer_text
-    #sys.exit(0)
 
     a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
     a.save()
