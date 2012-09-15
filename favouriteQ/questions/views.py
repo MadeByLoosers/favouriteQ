@@ -1,10 +1,9 @@
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from forms import QuestionForm
-from questions.models import Question, Answer
+from questions.models import Question
+
 
 def current_question(request):
     if request.method == 'POST':
@@ -19,7 +18,7 @@ def current_question(request):
         form = QuestionForm()
 
     question = Question.objects.get_current_question()
-    return render_to_response('questions/current_question.html', {"question": question, "form": form}, context_instance=RequestContext(request))
+    return render_to_response('questions/current_question.html', {"question": question, "form": form, "current": True}, context_instance=RequestContext(request))
 
 
 def archive(request):
