@@ -48,4 +48,6 @@ def detail(request, question_id):
         form = QuestionForm()
 
     question = get_object_or_404(Question, Q(asked_date__isnull=False), pk=question_id)  # check it's been asked here
-    return render_to_response('questions/current_question.html', {"question": question, "form": form}, context_instance=RequestContext(request))
+    return render_to_response('questions/current_question.html',
+        {"question": question, "form": form, "twitter_account": settings.TWITTER_USER},
+        context_instance=RequestContext(request))
