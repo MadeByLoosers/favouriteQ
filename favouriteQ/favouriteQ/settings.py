@@ -159,6 +159,8 @@ TWITTER_API = {
     'access_token_secret': ''
 }
 
+TWITTER_USER = 'FavouriteQ'
+
 try:
     from localsettings.localsettings import *
 except:
