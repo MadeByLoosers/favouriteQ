@@ -41,7 +41,7 @@
     $('.collapsable').not($area).height(0);
     $('.collapsable-trigger').not(this).removeClass('active');
 
-    console.log(areaHeight);
+    //console.log(areaHeight);
   }
 
 
