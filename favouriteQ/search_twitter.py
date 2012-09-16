@@ -7,10 +7,11 @@ from questions.models import Question, Answer, Person
 from django.conf import settings
 
 
-twitter_api = twitter.Api(consumer_key=settings.TWITTER_API['consumer_key'],
-              consumer_secret=settings.TWITTER_API['consumer_secret'],
-              access_token_key=settings.TWITTER_API['access_token_key'],
-              access_token_secret=settings.TWITTER_API['access_token_secret'])
+twitter_api = twitter.Api(
+    consumer_key=settings.TWITTER_API['consumer_key'],
+    consumer_secret=settings.TWITTER_API['consumer_secret'],
+    access_token_key=settings.TWITTER_API['access_token_key'],
+    access_token_secret=settings.TWITTER_API['access_token_secret'])
 twitter_account = settings.TWITTER_USER
 
 answer = Answer.objects.get_newest_tweet_answer()
@@ -21,18 +22,20 @@ tweets = twitter_api.GetSearch(twitter_account, per_page=100, page=1, lang='', s
 
 def add_answer_to_db(tweet):
     question = Question.objects.get_current_question()
-    print tweet
-    sys.exit()
     person = Person.objects.filter(twitter_username=tweet.user.screen_name)
 
     #TODO: could this sort of logic be moved to the model?
     if not person:
         # Get the users real name
-        user = twitter_api.GetUser('pxgunit')
-        print user.name
-        # split into 2 strings
+        user = twitter_api.GetUser(tweet.user.screen_name)
+        full_name_list = user.name.split(" ")
+        # Surname is the last word
+        surname = full_name_list[-1]
+        # First name is all the other words
+        first_name = " ".join(full_name_list[:-1])
+        #print "Creating Person " + first_name + " " + surname
 
-        person = Person(twitter_username=tweet.user.screen_name, )
+        person = Person(twitter_username=tweet.user.screen_name, surname=surname, first_name=first_name)
         person.save()
     else:
         # get person from the query set. Inelegant could this be modified with custom save() on the model
