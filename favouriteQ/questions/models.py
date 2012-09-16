@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class QuestionManager(models.Manager):
     def get_current_question(self):
         # get the question with the most recent asked date (null asked date means question hasn't been asked)
@@ -16,17 +17,23 @@ class QuestionManager(models.Manager):
 
 class Question(models.Model):
     question = models.CharField(max_length=140)
-    asked_date = models.DateTimeField(null=True, blank=True) # Null if question hasn't been asked
-    priority = models.BooleanField() # deafult to not priority
+    asked_date = models.DateTimeField(null=True, blank=True)  # Null if question hasn't been asked
+    priority = models.BooleanField()  # deafult to not priority
     approved = models.BooleanField()
-    
+
     # System fields
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = QuestionManager()
 
     def __unicode__(self):
         return self.question
+
+    @property
+    def num(self):
+        #if self.asked_date:
+        count = Question.objects.filter(asked_date__lte=self.asked_date).count()  # TODO: add filter here on asked_date
+        return count
 
 
 class Person(models.Model):
@@ -35,8 +42,8 @@ class Person(models.Model):
     surname = models.CharField(max_length=25)
     middle_names = models.CharField(max_length=25, blank=True)
     # automatic system fields
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return self.twitter_username
@@ -56,13 +63,13 @@ class AnswerManager(models.Manager):
 
 class Answer(models.Model):
     question = models.ForeignKey(Question)
-    answer_text = models.CharField(max_length=200) # Increased due to strange tweets with more than 140 characters
+    answer_text = models.CharField(max_length=200)  # Increased due to strange tweets with more than 140 characters
     person = models.ForeignKey(Person)
     tweet_id = models.IntegerField()
 
     # automatic system fields
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     objects = AnswerManager()
 
     def __unicode__(self):
