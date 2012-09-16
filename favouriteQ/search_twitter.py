@@ -31,7 +31,10 @@ def add_answer_to_db(tweet):
         full_name_list = user.name.split(" ")
         first_name = full_name_list[0]
         middle_names = " ".join(full_name_list[1:-1])
-        surname = full_name_list[-1]
+        if len(full_name_list) > 1:
+            surname = full_name_list[-1]
+        else:
+            surname = ""
 
         person = Person(twitter_username=tweet.user.screen_name,
             first_name=first_name,

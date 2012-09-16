@@ -48,9 +48,15 @@ class Person(models.Model):
     def __unicode__(self):
         return self.twitter_username
 
-    def _name(self):
-        return '%s %s' % (self.first_name, self.surname)
-    name = property(_name)
+    @property
+    def name(self):
+        if self.middle_names and self.surname:
+            return '%s %s %s' % (self.first_name, self.middle_names, self.surname)
+        elif self.surname:
+            return '%s %s' % (self.first_name, self.surname)
+        else:
+            # Person should always have firstname set as a minimum
+            return self.first_name
 
     class Meta:
         verbose_name_plural = "People"
