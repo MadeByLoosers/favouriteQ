@@ -29,13 +29,14 @@ def add_answer_to_db(tweet):
         # Get the users real name
         user = twitter_api.GetUser(tweet.user.screen_name)
         full_name_list = user.name.split(" ")
-        # Surname is the last word
+        first_name = full_name_list[0]
+        middle_names = " ".join(full_name_list[1:-1])
         surname = full_name_list[-1]
-        # First name is all the other words
-        first_name = " ".join(full_name_list[:-1])
-        #print "Creating Person " + first_name + " " + surname
 
-        person = Person(twitter_username=tweet.user.screen_name, surname=surname, first_name=first_name)
+        person = Person(twitter_username=tweet.user.screen_name,
+            first_name=first_name,
+            middle_names=middle_names,
+            surname=surname)
         person.save()
     else:
         # get person from the query set. Inelegant could this be modified with custom save() on the model
