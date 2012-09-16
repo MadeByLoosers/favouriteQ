@@ -21,11 +21,18 @@ tweets = twitter_api.GetSearch(twitter_account, per_page=100, page=1, lang='', s
 
 def add_answer_to_db(tweet):
     question = Question.objects.get_current_question()
+    print tweet
+    sys.exit()
     person = Person.objects.filter(twitter_username=tweet.user.screen_name)
 
     #TODO: could this sort of logic be moved to the model?
     if not person:
-        person = Person(twitter_username=tweet.user.screen_name)
+        # Get the users real name
+        user = twitter_api.GetUser('pxgunit')
+        print user.name
+        # split into 2 strings
+
+        person = Person(twitter_username=tweet.user.screen_name, )
         person.save()
     else:
         # get person from the query set. Inelegant could this be modified with custom save() on the model
