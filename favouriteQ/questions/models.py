@@ -12,6 +12,7 @@ class QuestionManager(models.Manager):
         # no priority questions then get from non-priority
         if not questions:
             questions = self.order_by('?').filter(asked_date__isnull=True, priority=0, approved=1)
+        #TODO: add check and behaviour if we don't have a question.
         return questions[0]
 
 
@@ -31,7 +32,6 @@ class Question(models.Model):
 
     @property
     def num(self):
-        #if self.asked_date:
         count = Question.objects.filter(asked_date__lte=self.asked_date).count()  # TODO: add filter here on asked_date
         return count
 
