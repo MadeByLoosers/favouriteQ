@@ -1,13 +1,19 @@
 import os
 import sys
 import twitter
+import HTMLParser
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "favouriteQ.settings")
-from django.core.management import execute_from_command_line
 from questions.models import Question, Answer, Person
-# export PYTHONPATH=$PYTHONPATH:/Library/Python/2.7/site-packages
+from django.conf import settings
 
-twitter_api = twitter.Api()
-twitter_account = '@favouriteQ'
+
+twitter_api = twitter.Api(
+    consumer_key=settings.TWITTER_API['consumer_key'],
+    consumer_secret=settings.TWITTER_API['consumer_secret'],
+    access_token_key=settings.TWITTER_API['access_token_key'],
+    access_token_secret=settings.TWITTER_API['access_token_secret'])
+twitter_account = settings.TWITTER_USER
+
 answer = Answer.objects.get_newest_tweet_answer()
 
 # Example URL http://search.twitter.com/search.json?q=%40favouriteQ
@@ -20,16 +26,33 @@ def add_answer_to_db(tweet):
 
     #TODO: could this sort of logic be moved to the model?
     if not person:
-        person = Person(twitter_username=tweet.user.screen_name)
+        # Get the users real name
+        user = twitter_api.GetUser(tweet.user.screen_name)
+        full_name_list = user.name.split(" ")
+        first_name = full_name_list[0]
+        middle_names = " ".join(full_name_list[1:-1])
+        if len(full_name_list) > 1:
+            surname = full_name_list[-1]
+        else:
+            surname = ""
+
+        person = Person(twitter_username=tweet.user.screen_name,
+            first_name=first_name,
+            middle_names=middle_names,
+            surname=surname)
         person.save()
     else:
-        # get person from the query set. Inelegant could this be modified?
+        # get person from the query set. Inelegant could this be modified with custom save() on the model
         person = person[0]
 
     #TODO: ugly global below remove by restructuring with a class
-    # Remove @FavouriteQueston from the tweet
-    answer_text = tweet.text[len(twitter_account) + 1:]
-    print answer_text + " " + person.twitter_username
+    # Remove @FavouriteQueston from the tweet (+2 is for @ and space)
+    answer_text = tweet.text[len(twitter_account) + 2:]
+    #TODO: add a try catch here incase they are unprintable characters
+    #print answer_text + " " + person.twitter_username
+    # Decode HTML encoded entities from Twitter
+    h = HTMLParser.HTMLParser()
+    answer_text = h.unescape(answer_text)
 
     a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
     a.save()
@@ -41,7 +64,7 @@ def handle_tweet(tweet):
     if twitter_at_message_check(tweet.text, twitter_account):
         add_answer_to_db(tweet)
     else:
-        print "NO A AT MESSAGE: " + tweet.text
+        print "NOT A AT MESSAGE: " + tweet.text
     #TODO: does it contain a #q123 archive answer hashtag
     #var matches = tweet.text.match(/#q\d+$/i);
     # add_answer(tweet, question_id?)
@@ -52,6 +75,7 @@ def handle_tweet(tweet):
 
 
 def twitter_at_message_check(string, twitter_account):
+    twitter_account = '@' + twitter_account
     start_string = string[0:len(twitter_account)]
     return start_string.lower() == twitter_account.lower()
 

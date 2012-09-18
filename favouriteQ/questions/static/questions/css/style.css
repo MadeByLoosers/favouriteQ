@@ -231,7 +231,8 @@ form input[type="text"], form input[type="submit"], nav ul li:before, #logo {
 
 /* _base.standard.scss */
 body {
-  background: url("../img/pattern_200x200.png") repeat scroll 0 0 black; }
+  background: url("../img/pattern_200x200.png") repeat scroll 0 0 black;
+  padding-bottom: 25px; }
 
 h1 {
   color: #000; }
@@ -245,8 +246,7 @@ a {
   a:visited {
     color: #999; }
   a:hover {
-    color: #e41869;
-    text-decoration: underline; }
+    color: #e41869; }
 
 p {
   color: #999;
@@ -360,10 +360,11 @@ nav {
   .collapsable .collapsable-clip {
     max-width: 500px;
     margin: 0 auto 40px auto;
-    padding: 20px 0 40px 0;
+    padding: 0 0 40px 0;
     border-bottom: 10px solid #e41869; }
     .collapsable .collapsable-clip h2 {
-      padding: 20px 0;
+      padding: 0 0 20px 0;
+      margin-top: 0;
       margin-bottom: 20px;
       text-align: center; }
     .collapsable .collapsable-clip h3 {
@@ -385,23 +386,32 @@ nav {
 .collapsable #questionbox .tweet {
   color: #fff;
   font-size: 18px;
-  width: 500px;
+  max-width: 500px;
   text-align: center;
   border-bottom: 10px solid #e41869;
   margin: 0 auto;
   clear: both;
   overflow: hidden;
   padding-bottom: 20px; }
-  .question #questionbox .tweet span, .question #questionbox .tweet iframe,
+  .question #questionbox .tweet a, .question #questionbox .tweet span, .question #questionbox .tweet iframe,
+  .collapsable #questionbox .tweet a,
   .collapsable #questionbox .tweet span,
   .collapsable #questionbox .tweet iframe {
-    float: left; }
-  .question #questionbox .tweet span,
-  .collapsable #questionbox .tweet span {
-    margin: 0 10px 0 100px; }
+    display: block;
+    margin: 0 auto;
+    text-align: center; }
   .question #questionbox .tweet iframe,
   .collapsable #questionbox .tweet iframe {
     margin-top: 3px; }
+.question #questionbox .divider,
+.collapsable #questionbox .divider {
+  max-width: 500px;
+  text-align: center;
+  border-bottom: 10px solid #e41869;
+  margin: 0 auto;
+  clear: both;
+  overflow: hidden;
+  padding-bottom: 20px; }
 .question #questionbox h2,
 .collapsable #questionbox h2 {
   max-width: 500px;
@@ -442,8 +452,11 @@ nav {
   nav ul {
     padding-top: 2px;
     padding-bottom: 2px; }
-    nav ul li a {
-      font-size: 14px; }
+    nav ul li {
+      padding-top: 5px;
+      padding-bottom: 5px; }
+      nav ul li a {
+        font-size: 14px; }
 
   /* LOGO */
   #logo {

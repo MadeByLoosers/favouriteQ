@@ -15,7 +15,7 @@
 			@extend .font-josefin-bold-italic;
 			color:#fff;
 			font-size: 18px;
-			width: 500px;
+			max-width: 500px;
 			text-align: center;
 			border-bottom: 10px solid #e41869;
 			margin: 0 auto;
@@ -23,18 +23,29 @@
 			overflow:hidden;
 			padding-bottom: 20px;
 
-			span, iframe {
-				float:left;
-
+			a, span, iframe {
+				display:block;
+				margin:0 auto;
+				text-align:center;
 			}
 
 			span {
-				margin:0 10px 0 100px;
-
+				//margin:0 10px 0 100px;
 			}
+
 			iframe {
 				margin-top: 3px;
 			}
+		}
+
+		.divider {
+			max-width: 500px;
+			text-align: center;
+			border-bottom: 10px solid #e41869;
+			margin: 0 auto;
+			clear:both;
+			overflow:hidden;
+			padding-bottom: 20px;
 		}
 
 		h2 {

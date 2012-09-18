@@ -5,16 +5,23 @@
   <div class="question">
 
     <div id="questionbox">
-      <h2 class="question_title"><span>#x</span> {{ question.question }}</h2>
-       <div class="tweet"><span>Tweet your answer: </span><a href="https://twitter.com/intent/tweet?screen_name=favouriteQ" class="twitter-mention-button" data-related="guntlondon" data-dnt="true">Tweet to @favouriteQ</a></div>
+      <h2 class="question_title"><span>#{{ question.num }}</span> {{ question.question }}</h2>
+      {% if current %}
+      <div class="tweet">
+        <span>Tweet your answer: </span>
+        <a href="https://twitter.com/intent/tweet?screen_name={{ twitter_account }}" class="twitter-mention-button" data-related="guntlondon" data-dnt="true">Tweet to {{ twitter_account }}</a>
+      </div>
       <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      {% else %}
+      <div class="divider"></div>
+      {% endif %}
     </div>
     <ul class="question_answers">
       {% for answer in question.answer_set.all %}
       <li>
         <div class="question_answer">
           <p class="answer">{{ answer.answer_text }}</p>
-          <p class="author">{{ answer.person.first_name }} {{ answer.person.surname }} <a href="http://www.twitter.com/{{ answer.person }}" rel="external">@{{ answer.person }}</a> / {{answer.created_at|date:"g:ia"}}</p>
+          <p class="author">{{ answer.person.name }} <a href="http://www.twitter.com/{{ answer.person }}" rel="external">@{{ answer.person }}</a> / {{answer.created_at|date:"g:ia"}}</p>
         </div>
       </li>
       {% endfor %}

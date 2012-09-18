@@ -5,9 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--[if lt IE 9]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
     <title>Your Favourite Question</title>
-    <meta name="description" content="">
+    <meta name="description" content="What's your favourite question? Aggregating all answers to the daily questions posted by @favouriteq on twitter">
 
     <meta name="viewport" content="width=device-width">
     <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:700,700italic' rel='stylesheet' type='text/css'>
@@ -22,9 +22,11 @@
 
         <nav>
             <ul>
+                <li><a href="/">Home</a></li>
                 <li><a href="#about" class="collapsable-trigger">About</a></li>
-                <li><a href="#suggest" class="collapsable-trigger">Suggest a question</a></li>
-                <li class="last"><a href="http://twitter.com/favouriteQ" rel="external">@favouriteQ</a></li>
+                <li><a href="#suggest" class="collapsable-trigger">Suggest</a></li>
+                <li><a href="{% url questions.views.archive %}">Archive</a></li>
+                <li class="last"><a href="http://twitter.com/{{ twitter_account }}" rel="external">@{{ twitter_account }}</a></li>
             </ul>
         </nav>
 
@@ -49,18 +51,18 @@
             <div class="collapsable-clip">
                 <h2>What is the question you always wanted to ask?</h2>
                 <p>If you have a burning question to ask everyone, please send it to us using the form below. </p>
-                <form action="" method="post">
+                <form action="/" method="post">
                     {% csrf_token %}
                     <fieldset>
                         <legend>Enter your question</legend>
 
                         <div class="input-container">
-                            <textarea name="question" id="question" cols="25" rows="5" placeholder="What is your favourite..." maxlength="130" required></textarea>
-                            <label for="question"></label>
+                            {{ form.question }}
+                            <label for="id_question"></label>
                         </div>
 
                         <div class="input-container">
-                            <textarea name="twitter_user" id="twitter_user" cols="25" rows="1" placeholder="@your_twitter_handle (optional)" maxlength="20"></textarea>
+                            {{ form.twitter_user }}
                         </div>
 
                         <input type="submit" value="Submit" />
@@ -90,7 +92,7 @@
     <script src="{{STATIC_URL}}questions/js/script.js"></script>
 
     <script>
-        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        var _gaq=[['_setAccount','UA-29684348-3'],['_trackPageview']];
         (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
         g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
         s.parentNode.insertBefore(g,s)}(document,'script'));
