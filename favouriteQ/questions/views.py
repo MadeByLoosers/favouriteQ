@@ -7,36 +7,23 @@ from django.conf import settings
 
 
 def current_question(request):
-    form = handle_form(request)
     question = Question.objects.get_current_question()
-    params = {
-        "question": question,
-        "form": form,
-        "current": True,
-    }
+    params = {"question": question, "current": True}
     return render_template(request, "questions/current_question.html", params)
 
 
 def archive(request):
-    form = QuestionForm()
     questions = Question.objects.order_by('-asked_date').filter(asked_date__isnull=False)
-    params = {
-        "questions": questions,
-        "form": form,
-    }
+    params = {"questions": questions}
     return render_template(request, "questions/archive.html", params)
 
 
 def detail(request, question_id):
-    form = handle_form(request)
     # check if question has been asked
     question = get_object_or_404(Question,
                                  Q(asked_date__isnull=False),
                                  pk=question_id)
-    params = {
-        "question": question,
-        "form": form,
-    }
+    params = {"question": question}
     return render_template(request, "questions/current_question.html", params)
 
 
@@ -57,5 +44,7 @@ def handle_form(request):
 
 def render_template(request, template, params):
     params['twitter_account'] = settings.TWITTER_USER
+    # Deal with Form submission which is on everypage
+    params['form'] = handle_form(request)
     return render_to_response(template, params,
                               context_instance=RequestContext(request))
