@@ -6,21 +6,23 @@ from questions.models import Question, Answer, Person
 
 
 class Command(BaseCommand):
+    #TODO: update the vars below
     args = '<poll_id poll_id ...>'
     help = 'Closes the specified poll for voting'
 
     def handle(self, *args, **options):
-        twitter_api = twitter.Api(
+        # should this be set in __init__?
+        self.twitter_account = settings.TWITTER_USER
+        self.twitter_api = twitter.Api(
             consumer_key=settings.TWITTER_API['consumer_key'],
             consumer_secret=settings.TWITTER_API['consumer_secret'],
             access_token_key=settings.TWITTER_API['access_token_key'],
             access_token_secret=settings.TWITTER_API['access_token_secret'])
-        twitter_account = settings.TWITTER_USER
 
         answer = Answer.objects.get_newest_tweet_answer()
 
         # Example URL http://search.twitter.com/search.json?q=%40favouriteQ
-        tweets = twitter_api.GetSearch(twitter_account,
+        tweets = self.twitter_api.GetSearch(self.twitter_account,
                                        per_page=100,
                                        page=1,
                                        lang='',
@@ -30,18 +32,39 @@ class Command(BaseCommand):
             self.stdout.write('No new tweets')
         else:
             for tweet in tweets:
-                self.stdout.write('tweet: ' + tweet)
-                #handle_tweet(tweet)
+                #self.stdout.write('tweet: ' + tweet.text + '\n')
+                self.handle_tweet(tweet)
 
+    def handle_tweet(self, tweet):
+        #self.stdout.write('got here\n')
+        #self.stdout.write(self.twitter_account + '\n')
+        # check if it's just a mention or an actual @ message
+        if self.twitter_at_message_check(tweet.text, self.twitter_account):
+            self.add_answer_to_db(tweet)
+        else:
+            self.stdout.write('NOT A AT MESSAGE: ' + tweet.text)
 
-    def add_answer_to_db(tweet):
+        #TODO: does it contain a #q123 archive answer hashtag
+        #var matches = tweet.text.match(/#q\d+$/i);
+        # add_answer(tweet, question_id?)
+
+        # does it contain a #question hashtag at the end?
+        #if (tweet.text.match(/#question$/i)) {
+        # suggest_question(tweet, question_id?)
+
+    def twitter_at_message_check(self, string, twitter_account):
+        twitter_account = '@' + self.twitter_account
+        start_string = string[0:len(twitter_account)]
+        return start_string.lower() == twitter_account.lower()
+
+    def add_answer_to_db(self, tweet):
         question = Question.objects.get_current_question()
         person = Person.objects.filter(twitter_username=tweet.user.screen_name)
 
         #TODO: could this sort of logic be moved to the model?
         if not person:
             # Get the users real name
-            user = twitter_api.GetUser(tweet.user.screen_name)
+            user = self.twitter_api.GetUser(tweet.user.screen_name)
             full_name_list = user.name.split(" ")
             first_name = full_name_list[0]
             middle_names = " ".join(full_name_list[1:-1])
@@ -61,32 +84,15 @@ class Command(BaseCommand):
 
         #TODO: ugly global below remove by restructuring with a class
         # Remove @FavouriteQueston from the tweet (+2 is for @ and space)
-        answer_text = tweet.text[len(twitter_account) + 2:]
+        answer_text = tweet.text[len(self.twitter_account) + 2:]
         #TODO: add a try catch here incase they are unprintable characters
         #print answer_text + " " + person.twitter_username
         # Decode HTML encoded entities from Twitter
         h = HTMLParser.HTMLParser()
         answer_text = h.unescape(answer_text)
 
-        a = Answer(answer_text=answer_text, person=person, question=question, tweet_id=tweet.id)
+        a = Answer(answer_text=answer_text,
+                   person=person,
+                   question=question,
+                   tweet_id=tweet.id)
         a.save()
-
-    #TODO? move to it's own file/class/module?
-    def handle_tweet(tweet):
-        # check if it's just a mention or an actual @ message
-        if twitter_at_message_check(tweet.text, twitter_account):
-            add_answer_to_db(tweet)
-        else:
-            print "NOT A AT MESSAGE: " + tweet.text
-        #TODO: does it contain a #q123 archive answer hashtag
-        #var matches = tweet.text.match(/#q\d+$/i);
-        # add_answer(tweet, question_id?)
-
-        # does it contain a #question hashtag at the end?
-        #if (tweet.text.match(/#question$/i)) {
-        # suggest_question(tweet, question_id?)
-
-    def twitter_at_message_check(string, twitter_account):
-        twitter_account = '@' + twitter_account
-        start_string = string[0:len(twitter_account)]
-        return start_string.lower() == twitter_account.lower()
