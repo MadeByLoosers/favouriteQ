@@ -77,7 +77,7 @@ class Answer(models.Model):
     question = models.ForeignKey(Question)
     answer_text = models.CharField(max_length=200)  # Increased due to strange tweets with more than 140 characters
     person = models.ForeignKey(Person)
-    tweet_id = models.IntegerField()
+    tweet_id = models.CharField(max_length=50)
 
     # automatic system fields
     created_at = models.DateTimeField(auto_now_add=True)
