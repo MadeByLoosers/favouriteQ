@@ -30,7 +30,6 @@ class Command(BaseCommand):
             self.stdout.write('No new tweets')
         else:
             for tweet in tweets:
-                #self.stdout.write('tweet: ' + tweet.text + '\n')
                 self.handle_tweet(tweet)
 
     def handle_tweet(self, tweet):
