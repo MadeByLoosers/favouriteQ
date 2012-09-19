@@ -1,9 +1,9 @@
+from forms import QuestionForm
 from django.db.models import Q
+from django.conf import settings
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from forms import QuestionForm
 from questions.models import Question
-from django.conf import settings
 
 
 def current_question(request):

@@ -1,5 +1,5 @@
-import twitter
 import HTMLParser
+import twitter
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from questions.models import Question, Answer, Person
@@ -17,7 +17,7 @@ class Command(BaseCommand):
             access_token_key=settings.TWITTER_API['access_token_key'],
             access_token_secret=settings.TWITTER_API['access_token_secret'])
 
-        answer = Answer.objects.get_newest_tweet_answer()
+        answer = Answer.objects.latest('tweet_id')
 
         # Example URL http://search.twitter.com/search.json?q=%40favouriteQ
         tweets = self.twitter_api.GetSearch(self.twitter_account,
