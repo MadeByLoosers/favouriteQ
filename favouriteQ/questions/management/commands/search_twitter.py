@@ -6,9 +6,7 @@ from questions.models import Question, Answer, Person
 
 
 class Command(BaseCommand):
-    #TODO: update the vars below
-    args = '<poll_id poll_id ...>'
-    help = 'Closes the specified poll for voting'
+    help = 'Searches twitter for new @ tweets and saves them to the DB'
 
     def handle(self, *args, **options):
         # should this be set in __init__?
@@ -36,8 +34,6 @@ class Command(BaseCommand):
                 self.handle_tweet(tweet)
 
     def handle_tweet(self, tweet):
-        #self.stdout.write('got here\n')
-        #self.stdout.write(self.twitter_account + '\n')
         # check if it's just a mention or an actual @ message
         if self.twitter_at_message_check(tweet.text, self.twitter_account):
             self.add_answer_to_db(tweet)
@@ -79,14 +75,12 @@ class Command(BaseCommand):
                 surname=surname)
             person.save()
         else:
-            # get person from the query set. Inelegant could this be modified with custom save() on the model
+            # get person from the query set.
+            # Inelegant could this be modified with custom save() on the model?
             person = person[0]
 
-        #TODO: ugly global below remove by restructuring with a class
         # Remove @FavouriteQueston from the tweet (+2 is for @ and space)
         answer_text = tweet.text[len(self.twitter_account) + 2:]
-        #TODO: add a try catch here incase they are unprintable characters
-        #print answer_text + " " + person.twitter_username
         # Decode HTML encoded entities from Twitter
         h = HTMLParser.HTMLParser()
         answer_text = h.unescape(answer_text)
