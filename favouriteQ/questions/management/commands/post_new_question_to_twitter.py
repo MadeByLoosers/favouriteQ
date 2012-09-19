@@ -1,23 +1,25 @@
 from django.conf import settings
 from django.core.management.base import BaseCommand
+from django.utils import timezone
+from questions.models import Question
 import twitter
 
 
 class Command(BaseCommand):
-    help = 'searches the twitter api for user details'
+    help = 'posts a new question to twitter'
 
     def handle(self, *args, **options):
+
         twitter_api = twitter.Api(
             consumer_key=settings.TWITTER_API['consumer_key'],
             consumer_secret=settings.TWITTER_API['consumer_secret'],
             access_token_key=settings.TWITTER_API['access_token_key'],
             access_token_secret=settings.TWITTER_API['access_token_secret'])
 
-        user = twitter_api.GetUser('pxgunit')
-        full_name = user.name
-        full_name_list = full_name.split(" ")
-        surname = full_name_list[-1]
-        first_name = " ".join(full_name_list[:-1])
-        self.stdout.write(first_name + "\n")
-        self.stdout.write(surname + "\n")
-        self.stdout.write(settings.TWITTER_USER + "\n")
+        question = Question.objects.get_new_question()
+
+        #TODO: add try catch here (in case of API failure)
+        status = twitter_api.PostUpdate(question.question)
+        self.stdout.write(status.text + "\n")
+        question.asked_date = timezone.now()
+        question.save()
