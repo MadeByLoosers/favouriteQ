@@ -5,20 +5,9 @@ import twitter
 
 
 class Command(BaseCommand):
-    args = '<poll_id poll_id ...>'
-    help = 'Closes the specified poll for voting'
+    help = 'searches the twitter api for user details'
 
     def handle(self, *args, **options):
-        # for poll_id in args:
-        #     try:
-        #         poll = Poll.objects.get(pk=int(poll_id))
-        #     except Poll.DoesNotExist:
-        #         raise CommandError('Poll "%s" does not exist' % poll_id)
-
-        #     poll.opened = False
-        #     poll.save()
-
-        #     self.stdout.write('Successfully closed poll "%s"' % poll_id)
         twitter_api = twitter.Api(
             consumer_key=settings.TWITTER_API['consumer_key'],
             consumer_secret=settings.TWITTER_API['consumer_secret'],
@@ -32,3 +21,4 @@ class Command(BaseCommand):
         first_name = " ".join(full_name_list[:-1])
         self.stdout.write(first_name + "\n")
         self.stdout.write(surname + "\n")
+        self.stdout.write(settings.TWITTER_USER + "\n")
