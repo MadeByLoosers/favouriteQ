@@ -14,9 +14,21 @@ Another [Gunt London](http://guntlondon.com) production
 
 ###Database
 
-* Create a mysql database called `favouriteq`
-* Install the latest mysql database SQL dump from `/data/sql`
+Create a mysql database called `favouriteq`
 
+Create tables for apps that aren't using south
+
+```
+./manage.py syncdb
+```
+
+Create tables for apps that are using south. Data will be loaded from fixtures
+
+```
+./manage.py migrate
+```
+
+During development developers should continue to run the ./manage.py migrate command to keep their DB up to date. 
 
 ###Virtual environment
 
