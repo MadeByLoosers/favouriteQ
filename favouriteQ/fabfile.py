@@ -41,8 +41,7 @@ def deploy():
     # 1. activate virtual env? Is this neeeded? Done in server setup?
 
     # 2. Pull from Git
-    with cd(GIT_REPO_PATH):
-        run('git pull')
+    git_pull()
 
     # 3. run rsync script
     #require('fab_hosts', provided_by=[production])
@@ -56,7 +55,7 @@ def deploy():
     # python /srv/www/www.favouritequestion.com/favouriteQ/manage.py collectstatic --noinput
 
     # 6. Restart server
-    restart_webserver()
+    #restart_webserver()
 
 
 def restart_webserver():
@@ -67,7 +66,9 @@ def restart_webserver():
 
 def git_pull():
     """Updates the repository."""
-    with cd(env.directory):
+    with cd(GIT_REPO_PATH):
+        run('git pull')
+    #with cd(env.directory):
 
 # def syncdb():
 #     with cd(SERVER_PATH):
