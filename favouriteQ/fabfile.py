@@ -1,17 +1,18 @@
-#import os
 from fabric.api import env, sudo, local
-from fabric.operations import put, run
+from fabric.operations import run
 from fabric.context_managers import cd, prefix
+import os
 
+PROJECT_NAME = 'favouriteQ'
 #TODO: move to environments (may be different for QA, staging, production
-GIT_REPO_PATH = '/srv/www/git_favouriteQ/'
 
 
 def production():
     env.hosts = ['54.245.116.229']
     env.user = 'ec2-user'
     env.directory = '/srv/www/www.favouritequestion.com/'
-    env.activate = 'source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
+    env.activate = '/home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
+    env.git_repo_path = '/srv/www/git_favouriteQ/'
     env.key_filename = ['~/.ssh/django.pem']
 
 
@@ -20,56 +21,41 @@ def staging():
     env.user = 'ec2-user'
     env.directory = '/srv/www/staging.favouritequestion.com/'
     #TODO: give staging it's own venv
-    env.activate = 'source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
+    env.activate = '/home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
+    env.git_repo_path = '/srv/www/git_favouriteQ/'
     env.key_filename = ['~/.ssh/django.pem']
 
 
-def local():
-    "Use the local virtual server (not currently used)"
-    env.hosts = ['127.0.0.1']
-    env.path = '/path/to/project_name'
-    env.user = 'garethr'
-    env.virtualhost_path = "/"
-
-
 def deploy():
-    # 1. activate virtual env? Is this neeeded? Done in server setup?
-
-    # 2. Pull from Git
     git_pull()
-
-    # 3. run rsync script
-    rsync_files()
     # TODO: research symlinking different versions of the site
-
+    rsync_files()
+    collect_static()
     # 4. run the DB migrations (how to stop this using fixtures on live?)
-    # ./manage.py migrate projects
+    # 5. ./manage.py migrate projects
 
     # 5. collect the static files
     # with prefix('workon ' + env.activate):
     #     run('which python')
     #with cd(env.directory):
     #run('./manage.py collectstatic --noinput
-
-    # 6. Restart server
     restart_webserver()
 
 
 def git_pull():
-    with cd(GIT_REPO_PATH):
+    with cd(env.git_repo_path):
         run('git pull')
 
 
 def rsync_files():
-    run('rsync -av --delete --exclude .git* --exclude localsettings.py ' + GIT_REPO_PATH + ' ' + env.directory)
+    run('rsync -av --delete --exclude .git* --exclude localsettings.py ' + env.git_repo_path + ' ' + env.directory)
 
 
 def collect_static():
-    #TODO: use os.path.join(,,,
-    manage_py_path = env.directory + 'favouriteQ/manage.py'
-    with prefix(env.activate):
+    manage_py_path = os.path.join(env.directory, PROJECT_NAME, 'manage.py')
+    with prefix('source ' + env.activate):
         run(manage_py_path)
-    #run('/srv/www/staging.favouritequestion.com/favouriteQ/manage.py collectstatic --noinput')
+    # collectstatic --noinput'
 
 
 def restart_webserver():
