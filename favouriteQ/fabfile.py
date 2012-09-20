@@ -11,7 +11,7 @@ def production():
     env.hosts = ['54.245.116.229']
     env.user = 'ec2-user'
     env.directory = '/srv/www/www.favouritequestion.com/'
-    env.activate = 'source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate/'
+    env.activate = 'source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
     env.key_filename = ['~/.ssh/django.pem']
 
 
@@ -20,7 +20,7 @@ def staging():
     env.user = 'ec2-user'
     env.directory = '/srv/www/staging.favouritequestion.com/'
     #TODO: give staging it's own venv
-    env.activate = 'source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate/'
+    env.activate = 'source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
     env.key_filename = ['~/.ssh/django.pem']
 
 
@@ -67,7 +67,7 @@ def rsync_files():
 def collect_static():
     #TODO: use os.path.join(,,,
     manage_py_path = env.directory + 'favouriteQ/manage.py'
-    with prefix('source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate'):
+    with prefix(env.activate):
         run(manage_py_path)
     #run('/srv/www/staging.favouritequestion.com/favouriteQ/manage.py collectstatic --noinput')
 
