@@ -4,7 +4,6 @@ from fabric.context_managers import cd, prefix
 import os
 
 PROJECT_NAME = 'favouriteQ'
-#TODO: move to environments (may be different for QA, staging, production
 
 
 def production():
@@ -22,13 +21,12 @@ def staging():
     env.hosts = ['54.245.116.229']
     env.user = 'ec2-user'
     env.directory = '/srv/www/staging.favouritequestion.com/'
-    #TODO: give staging it's own venv
+    #TODO: give staging it's own venv (could be created by initialise)
     env.activate = '/home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
     env.git_repo_path = '/srv/www/git_favouriteQ/'
     env.key_filename = ['~/.ssh/django.pem']
     # The name supervisor uses
-    env.server_name = 'favourite_q'
-    #env.server_name = 'favourite_q_staging'
+    env.server_name = 'favourite_q_staging'
 
 
 def deploy():
