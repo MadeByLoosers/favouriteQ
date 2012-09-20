@@ -1,4 +1,4 @@
-from fabric.api import env, sudo, local
+from fabric.api import env, sudo
 from fabric.operations import run
 from fabric.context_managers import cd, prefix
 import os
@@ -14,6 +14,8 @@ def production():
     env.activate = '/home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
     env.git_repo_path = '/srv/www/git_favouriteQ/'
     env.key_filename = ['~/.ssh/django.pem']
+    # The name supervisor uses
+    env.server_name = 'favourite_q'
 
 
 def staging():
@@ -24,21 +26,22 @@ def staging():
     env.activate = '/home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
     env.git_repo_path = '/srv/www/git_favouriteQ/'
     env.key_filename = ['~/.ssh/django.pem']
+    # The name supervisor uses
+    env.server_name = 'favourite_q'
+    #env.server_name = 'favourite_q_staging'
 
 
 def deploy():
-    git_pull()
-    # TODO: research symlinking different versions of the site
-    rsync_files()
-    collect_static()
-    # 4. run the DB migrations (how to stop this using fixtures on live?)
-    # 5. ./manage.py migrate projects
-
-    # 5. collect the static files
-    # with prefix('workon ' + env.activate):
-    #     run('which python')
-    #with cd(env.directory):
-    #run('./manage.py collectstatic --noinput
+    #TODO: add a initialise function which sets the project up fresh
+    #TODO: do DB backups here
+    #TODO: pip update requirements.txt here
+    git_pull()  # could switch branches here
+    # could tag the release
+    #TODO: research symlinking different versions of the site
+    rsync()
+    collectstatic()
+    #TODO: run the DB migrations (how to stop this using fixtures on live?) test
+    #./manage.py migrate projects
     restart_webserver()
 
 
@@ -47,21 +50,19 @@ def git_pull():
         run('git pull')
 
 
-def rsync_files():
+def rsync():
     run('rsync -av --delete --exclude .git* --exclude localsettings.py ' + env.git_repo_path + ' ' + env.directory)
 
 
-def collect_static():
-    manage_py_path = os.path.join(env.directory, PROJECT_NAME, 'manage.py')
-    with prefix('source ' + env.activate):
-        run(manage_py_path)
-    # collectstatic --noinput'
+def collectstatic():
+    with cd(os.path.join(env.directory, PROJECT_NAME)):
+        with prefix('source ' + env.activate):
+            run('./manage.py collectstatic --noinput')
 
 
 def restart_webserver():
     """ Restart Gnunicorn wih Supervisor """
-    #TODO: move name off the app to a variable
-    sudo("supervisorctl restart favourite_q")
+    sudo('supervisorctl restart ' + env.server_name)
 
 
 # def syncdb():
