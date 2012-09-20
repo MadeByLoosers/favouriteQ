@@ -2,11 +2,9 @@
 from fabric.api import env, sudo, local
 from fabric.operations import put, run
 from fabric.context_managers import cd
-#from settings import PROJECT_ROOT
 
-GIT_REPO_PATH = '/srv/www/git_favouriteQ'
-PRODUCTION_PATH = '/srv/www/www.favouritequestion.com'
-STAGING_PATH = '/srv/www/staging.favouritequestion.com'
+#TODO: move to environments (may be different for QA, staging, production
+GIT_REPO_PATH = '/srv/www/git_favouriteQ/'
 
 
 def production():
@@ -26,15 +24,15 @@ def staging():
 
 
 def local():
-    "Use the local virtual server"
-    config.hosts = ['127.0.0.1']
-    config.path = '/path/to/project_name'
-    config.user = 'garethr'
-    config.virtualhost_path = "/"
+    "Use the local virtual server (not currently used)"
+    env.hosts = ['127.0.0.1']
+    env.path = '/path/to/project_name'
+    env.user = 'garethr'
+    env.virtualhost_path = "/"
 
 
 def mkfile():
-    run("touch pxg_fabric_test.txt")
+    run('touch ' + env.user + '.txt')
 
 
 def deploy():
@@ -45,8 +43,9 @@ def deploy():
 
     # 3. run rsync script
     #require('fab_hosts', provided_by=[production])
-
-    #rsync -av --delete --exclude .git* --exclude localsettings.py /srv/www/git_favouriteQ/ /srv/www/www.favouritequestion.com/
+    with cd(env.directory):
+        #mkfile()
+        run('rsync -av --delete --exclude .git* --exclude localsettings.py ' + GIT_REPO_PATH + ' ' + env.directory)
 
     # 4. run the DB migrations (how to stop this using fixtures on live?)
     # ./manage.py migrate projects
@@ -55,7 +54,7 @@ def deploy():
     # python /srv/www/www.favouritequestion.com/favouriteQ/manage.py collectstatic --noinput
 
     # 6. Restart server
-    #restart_webserver()
+    restart_webserver()
 
 
 def restart_webserver():
