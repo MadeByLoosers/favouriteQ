@@ -67,7 +67,7 @@ def rsync_files():
 def collect_static():
     #TODO: use os.path.join(,,,
     manage_py_path = env.directory + 'favouriteQ/manage.py'
-    with prefix('source ' + env.activate):
+    with prefix('source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate'):
         run(manage_py_path)
     #run('/srv/www/staging.favouritequestion.com/favouriteQ/manage.py collectstatic --noinput')
 
