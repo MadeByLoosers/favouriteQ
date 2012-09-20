@@ -4,25 +4,70 @@ from fabric.operations import put, run
 from fabric.context_managers import cd
 #from settings import PROJECT_ROOT
 
-SERVER_PATH = '/var/www/pricedag'
+GIT_REPO_PATH = '/srv/www/git_favouriteQ'
+PRODUCTION_PATH = '/srv/www/www.favouritequestion.com'
+STAGING_PATH = '/srv/www/staging.favouritequestion.com'
 
 
-def server():
+def production():
     env.hosts = ['54.245.116.229']
     env.user = 'ec2-user'
+    env.directory = '/srv/www/www.favouritequestion.com'
+    env.activate = 'source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
     env.key_filename = ['~/.ssh/django.pem']
+
+
+def staging():
+    env.hosts = ['54.245.116.229']
+    env.user = 'ec2-user'
+    env.directory = '/srv/www/staging.favouritequestion.com'
+    env.activate = 'source /home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
+    env.key_filename = ['~/.ssh/django.pem']
+
+
+def local():
+    "Use the local virtual server"
+    config.hosts = ['127.0.0.1']
+    config.path = '/path/to/project_name'
+    config.user = 'garethr'
+    config.virtualhost_path = "/"
 
 
 def mkfile():
     run("touch pxg_fabric_test.txt")
 
 
-# def restart_webserver():
-#     """ Restart NGINX & UWSGI
-#     """
-#     sudo("stop uwsgi-pricedag")
-#     sudo("start uwsgi-pricedag")
+def deploy():
+    # 1. activate virtual env? Is this neeeded? Done in server setup?
 
+    # 2. Pull from Git
+    with cd(GIT_REPO_PATH):
+        run('git pull')
+
+    # 3. run rsync script
+    #require('fab_hosts', provided_by=[production])
+
+    #rsync -av --delete --exclude .git* --exclude localsettings.py /srv/www/git_favouriteQ/ /srv/www/www.favouritequestion.com/
+
+    # 4. run the DB migrations (how to stop this using fixtures on live?)
+    # ./manage.py migrate projects
+
+    # 5. collect the static files
+    # python /srv/www/www.favouritequestion.com/favouriteQ/manage.py collectstatic --noinput
+
+    # 6. Restart server
+    restart_webserver()
+
+
+def restart_webserver():
+    """ Restart Gnunicorn wih Supervisor """
+    #TODO: move name off the app to a variable
+    sudo("supervisorctl restart favourite_q")
+
+
+def git_pull():
+    """Updates the repository."""
+    with cd(env.directory):
 
 # def syncdb():
 #     with cd(SERVER_PATH):
@@ -54,9 +99,3 @@ def mkfile():
 # def git_reset():
 #     "Resets the repository to specified version."
 #     run("cd ~/git/$(repo)/; git reset --hard $(hash)")
-
-
-# def production():
-#     config.fab_hosts = ['a.example.com','b.example.com']
-#     config.repos = (('project','origin','master'),
-#                     ('app','origin','master'))
