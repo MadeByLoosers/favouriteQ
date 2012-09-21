@@ -22,7 +22,7 @@ def staging():
     env.user = 'ec2-user'
     env.directory = '/srv/www/staging.favouritequestion.com/'
     #TODO: give staging it's own venv (could be created by initialise)
-    env.activate = '/home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
+    env.activate = '/home/ec2-user/virtualenv/favouriteQ_staging/env/bin/activate'
     env.git_repo_path = '/srv/www/git_favouriteQ/'
     env.key_filename = ['~/.ssh/django.pem']
     # The name supervisor uses
@@ -37,9 +37,10 @@ def deploy():
     # could tag the release
     #TODO: research symlinking different versions of the site
     rsync()
+    install_requirements()
+    #TODO: how to stop fixtures running on live if using them
+    migrate_database()
     collectstatic()
-    #TODO: run the DB migrations (how to stop this using fixtures on live?) test
-    #./manage.py migrate projects
     restart_webserver()
 
 
@@ -51,6 +52,19 @@ def git_pull():
 
 def rsync():
     run('rsync -av --delete --exclude .git* --exclude localsettings.py ' + env.git_repo_path + ' ' + env.directory)
+
+
+def install_requirements():
+    with cd(os.path.join(env.directory)):
+        with prefix('source ' + env.activate):
+            run('pip install -r requirements/requirements.txt')
+            run('pip install -r requirements/requirements_production.txt')
+
+
+def migrate_database():
+    with cd(os.path.join(env.directory, PROJECT_NAME)):
+        with prefix('source ' + env.activate):
+            run('./manage.py migrate')
 
 
 def collectstatic():
