@@ -1,4 +1,5 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 from lazy import lazy
 
 
@@ -27,6 +28,7 @@ class QuestionManager(models.Manager):
 
 class Question(models.Model):
     question = models.CharField(max_length=140)
+    slug = models.CharField(max_length=140, null=True)
     # Null if question hasn't been asked
     asked_date = models.DateTimeField(null=True, blank=True)
     # deafult to not priority
@@ -45,6 +47,12 @@ class Question(models.Model):
     def num(self):
         count = Question.objects.filter(asked_date__lte=self.asked_date).count()
         return count
+
+    def save(self, *args, **kwargs):
+        print 'got here'
+        if not self.id:
+            self.slug = slugify(self.question)
+        super(Question, self).save(*args, **kwargs)
 
 
 class Person(models.Model):
