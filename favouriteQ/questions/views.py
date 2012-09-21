@@ -19,13 +19,8 @@ def archive(request):
 
 
 def detail(request, slug):
-    print slug
-    # check if question has been asked
-    # question = get_object_or_404(Question,
-    #                              Q(asked_date__isnull=False, slug=slug))
     question = get_object_or_404(Question,
-                                 Q(slug=slug))
-    print question
+                                 Q(asked_date__isnull=False, slug=slug))
 
     params = {"question": question}
     return render_template(request, "questions/current_question.html", params)
