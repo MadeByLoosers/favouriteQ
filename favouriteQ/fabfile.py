@@ -46,6 +46,7 @@ def deploy():
 def git_pull():
     with cd(env.git_repo_path):
         run('git pull')
+    #TODO: also update the config repo (this should be checked out with ssh keys as the GuntOps bit bucket user)
 
 
 def rsync():
@@ -54,6 +55,7 @@ def rsync():
 
 def collectstatic():
     with cd(os.path.join(env.directory, PROJECT_NAME)):
+        #TODO research: with prefix('workon myvenv'):
         with prefix('source ' + env.activate):
             run('./manage.py collectstatic --noinput')
 
