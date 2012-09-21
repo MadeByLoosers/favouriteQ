@@ -18,11 +18,10 @@ def archive(request):
     return render_template(request, "questions/archive.html", params)
 
 
-def detail(request, question_id):
-    # check if question has been asked
+def detail(request, slug):
     question = get_object_or_404(Question,
-                                 Q(asked_date__isnull=False),
-                                 pk=question_id)
+                                 Q(asked_date__isnull=False, slug=slug))
+
     params = {"question": question}
     return render_template(request, "questions/current_question.html", params)
 
