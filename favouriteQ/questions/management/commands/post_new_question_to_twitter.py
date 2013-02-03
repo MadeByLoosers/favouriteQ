@@ -30,7 +30,7 @@ class Command(BaseCommand):
                 status = twitter_api.PostUpdate(tweet_text)
                 self.stdout.write(status.text + "\n")
             except Exception, e:
-                print 'Twitter exception: %s' % e
+                self.stdout.write('Twitter exception: %s' % e)
         else:
             # blank the asked date on the question (back into question queue)
             current_question.asked_date = None
@@ -38,11 +38,10 @@ class Command(BaseCommand):
 
         # Ask new question (exclude the question before)
         question = Question.objects.get_new_question(exclude=current_question.id)
-        print 'new question is %s' % question
         try:
             status = twitter_api.PostUpdate(question.question)
             self.stdout.write(status.text + "\n")
         except Exception, e:
-            print 'Twitter exception: %s' % e
+            self.stdout.write('Twitter exception: %s' % e)
         question.asked_date = timezone.now()
         question.save()
