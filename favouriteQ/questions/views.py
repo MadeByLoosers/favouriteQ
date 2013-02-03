@@ -32,6 +32,7 @@ def ajax_suggest(request):
         form = QuestionForm(request.POST)
         if form.is_valid():
             q = Question(question=form.cleaned_data['question'],
+                         twitter_user=form.cleaned_data['twitter_user'],
                          approved=False)
             q.save()
             message = "success"
@@ -43,25 +44,26 @@ def ajax_suggest(request):
     return HttpResponse(message)
 
 
-def handle_form(request):
-    if request.method == 'POST':
-        form = QuestionForm(request.POST)
-        if form.is_valid():
-            q = Question(question=form.cleaned_data['question'],
-                         approved=False)
-            q.save()
-            print "success"
-        else:
-            # shouldn't be reached accept if HTML5 validation is bypassed
-            print "form not valid"
-    else:
-        form = QuestionForm()
-    return form
+# def handle_form(request):
+#     if request.method == 'POST':
+#         form = QuestionForm(request.POST)
+#         if form.is_valid():
+#             q = Question(question=form.cleaned_data['question'],
+#                          approved=False)
+#             q.save()
+#             print "success"
+#         else:
+#             # shouldn't be reached accept if HTML5 validation is bypassed
+#             print "form not valid"
+#     else:
+#         form = QuestionForm()
+#     return form
 
 
 def render_template(request, template, params):
     params['twitter_account'] = settings.TWITTER_USER
     # Deal with Form submission which is on everypage
-    params['form'] = handle_form(request)
+    #params['form'] = handle_form(request)
+    params['form'] = QuestionForm()
     return render_to_response(template, params,
                               context_instance=RequestContext(request))
