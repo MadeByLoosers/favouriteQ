@@ -162,6 +162,7 @@ TWITTER_API = {
 }
 
 TWITTER_USER = 'FavouriteQ'
+DOMAIN = 'http://favouritequestion.com/'
 
 try:
     from localsettings.localsettings import *

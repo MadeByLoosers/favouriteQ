@@ -13,10 +13,3 @@ class Command(BaseCommand):
             consumer_secret=settings.TWITTER_API['consumer_secret'],
             access_token_key=settings.TWITTER_API['access_token_key'],
             access_token_secret=settings.TWITTER_API['access_token_secret'])
-
-        num_questions = Question.objects.get_num_unasked_questions()
-        if num_questions < 7:
-            self.stdout.write('send tweet')
-            tweet_text = "We're running low on questions. Go to %s#suggest and suggest some more!" % settings.DOMAIN
-            status = twitter_api.PostUpdate(tweet_text)
-            self.stdout.write(status.text + "\n")
