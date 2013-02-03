@@ -1,8 +1,9 @@
-from forms import QuestionForm
-from django.db.models import Q
 from django.conf import settings
+from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from forms import QuestionForm
 from questions.models import Question
 
 
@@ -26,6 +27,22 @@ def detail(request, slug):
     return render_template(request, "questions/current_question.html", params)
 
 
+def ajax_suggest(request):
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            q = Question(question=form.cleaned_data['question'],
+                         approved=False)
+            q.save()
+            message = "success"
+        else:
+            # shouldn't be reached accept if HTML5 validation is bypassed
+            message = "form not valid"
+    else:
+        message = "you must post"
+    return HttpResponse(message)
+
+
 def handle_form(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -33,6 +50,7 @@ def handle_form(request):
             q = Question(question=form.cleaned_data['question'],
                          approved=False)
             q.save()
+            print "success"
         else:
             # shouldn't be reached accept if HTML5 validation is bypassed
             print "form not valid"
