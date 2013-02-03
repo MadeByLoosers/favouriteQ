@@ -52,7 +52,6 @@ class Question(models.Model):
         return count
 
     def save(self, *args, **kwargs):
-        print 'got here'
         if not self.id:
             self.slug = slugify(self.question)
         super(Question, self).save(*args, **kwargs)

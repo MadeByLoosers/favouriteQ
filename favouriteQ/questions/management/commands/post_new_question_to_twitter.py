@@ -30,6 +30,7 @@ class Command(BaseCommand):
             self.stdout.write(status.text + "\n")
         else:
             # blank the asked date on the question (back into question queue)
+            print 'no answers for question'
             current_question.asked_date = None
             current_question.save()
 
