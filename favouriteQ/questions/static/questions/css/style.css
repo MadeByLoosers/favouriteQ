@@ -295,15 +295,26 @@ form input[type="submit"] {
     color: #ccc;
     border-bottom-color: #ccc; }
 form ::-webkit-input-placeholder {
-  color: #ccc; }
+  color: #aaa; }
 form :-moz-placeholder {
-  color: #ccc; }
+  color: #aaa; }
 form input:invalid,
 form textarea:invalid {
   background-color: #e41869; }
 form .input-container {
   width: 100%;
   margin: 20px auto; }
+form #status {
+  opacity: 0;
+  clear: both;
+  margin-top: 20px;
+  overflow: auto; }
+  form #status img {
+    float: left;
+    margin: 0 8px 0 0; }
+  form #status p {
+    float: left;
+    margin: -2px 0 0 0; }
 
 /* _header.scss */
 nav {
