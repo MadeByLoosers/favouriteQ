@@ -25,6 +25,9 @@ class QuestionManager(models.Manager):
         #TODO: add check and behaviour if we don't have a question.
         return questions[0]
 
+    def get_num_unasked_questions(self):
+        return self.filter(asked_date__isnull=True, approved=1).count()
+
 
 class Question(models.Model):
     question = models.CharField(max_length=140)
