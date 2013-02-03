@@ -51,7 +51,7 @@
             <div class="collapsable-clip">
                 <h2>What is the question you always wanted to ask?</h2>
                 <p>If you have a burning question to ask everyone, please send it to us using the form below. </p>
-                <form action="/" method="post">
+                <form action="/" method="post" id="suggest-form">
                     {% csrf_token %}
                     <fieldset>
                         <legend>Enter your question</legend>
@@ -67,6 +67,10 @@
 
                         <input type="submit" value="Submit" />
 
+                        <div id="status">
+                            <img src="/static/questions/img/loading.gif" alt="loading">
+                            <p>...</p>
+                        </div>
                     </fieldset>
                 </form>
             </div>

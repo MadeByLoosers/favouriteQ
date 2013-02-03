@@ -12,11 +12,12 @@ class QuestionManager(models.Manager):
         return self.order_by('-asked_date').filter(asked_date__isnull=False,
                                                    approved=1)[0]
 
-    def get_new_question(self):
+    def get_new_question(self, exclude=None):
         # get priority questions first
         questions = self.order_by('?').filter(asked_date__isnull=True,
                                               priority=1,
-                                              approved=1)
+                                              approved=1).exclude(id=exclude)
+
         # no priority questions then get from non-priority
         if not questions:
             questions = self.order_by('?').filter(asked_date__isnull=True,
@@ -24,6 +25,9 @@ class QuestionManager(models.Manager):
                                                   approved=1)
         #TODO: add check and behaviour if we don't have a question.
         return questions[0]
+
+    def get_num_unasked_questions(self):
+        return self.filter(asked_date__isnull=True, approved=1).count()
 
 
 class Question(models.Model):
@@ -34,6 +38,9 @@ class Question(models.Model):
     # deafult to not priority
     priority = models.BooleanField()
     approved = models.BooleanField()
+    # Twitter user which suggested the question
+    # TODO: update this to link to be an foreign key to Person
+    twitter_user = models.CharField(max_length=140, null=True)
 
     # System fields
     created_at = models.DateTimeField(auto_now_add=True)
@@ -49,7 +56,6 @@ class Question(models.Model):
         return count
 
     def save(self, *args, **kwargs):
-        print 'got here'
         if not self.id:
             self.slug = slugify(self.question)
         super(Question, self).save(*args, **kwargs)

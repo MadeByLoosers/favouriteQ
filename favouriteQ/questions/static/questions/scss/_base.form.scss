@@ -53,11 +53,11 @@ form {
   }
 
   ::-webkit-input-placeholder {
-    color: #ccc;
+    color: #aaa;
   }
 
   :-moz-placeholder {
-     color: #ccc;
+     color: #aaa;
   }
 
   input:invalid,
@@ -68,5 +68,22 @@ form {
   .input-container {
     width:100%;
     margin:20px auto;
+  }
+
+  #status {
+    opacity:0;
+    clear:both;
+    margin-top:20px;
+    overflow:auto;
+
+    img {
+      float:left;
+      margin:0 8px 0 0;
+    }
+
+    p {
+      float:left;
+      margin:-2px 0 0 0;
+    }
   }
 }

@@ -12,6 +12,9 @@
     // add a character count to the
     countCharacters('#id_question');
 
+    // submit questions via ajax
+    $('#suggest-form').on('submit', submitQuestionAjax);
+
     // check whether we have deep-linked to a section
     checkDeeplink();
     $(window).bind('hashchange', checkDeeplink);
@@ -46,6 +49,55 @@
     $('.collapsable-trigger').not(this).removeClass('active');
 
     //console.log(areaHeight);
+  }
+
+
+  // intercept question submit, and submit instead via ajax
+  function submitQuestionAjax(e){
+    e.preventDefault();
+
+    var $status = $("#status"),
+        $loadingImage = $status.find("img"),
+        $loadingMessage = $status.find("p"),
+        $form = $(e.target),
+        status, img;
+
+    // set loaing state
+    $loadingImage.attr({ src:"/static/questions/img/loading.gif" });
+    $loadingMessage.html("Submitting question...");
+
+    // fade in loading message
+    $status
+      .css({opacity:0})
+      .animate({opacity:1}, 500, function() {
+
+      // post form
+      var formData = $form.serialize();
+      $.post("/ajax_suggest", formData, function(data, textStatus, jqXHR) {
+
+        // process result
+        if (data === "success") {
+          status = "Your question has been added! Why not add another?";
+          img = "/static/questions/img/tick.gif";
+        } else {
+          console.log(data, textStatus);
+          status = "Sorry, there was an error submitting your question, please try again...";
+          img = "/static/questions/img/cross.gif";
+        }
+
+        // display result and remove status
+        $loadingImage.fadeOut(250);
+        $loadingMessage.fadeOut(250, function(){
+          $loadingMessage.html(status).fadeIn(250);
+          $loadingImage.attr({src:img}).fadeIn(250);
+        });
+        $status.delay(3000).animate({opacity:0}, 250);
+
+        // reset form
+        $form.find("#id_question").val("");
+        //$form.find("#id_twitter_user").val("");
+      });
+    });
   }
 
 
