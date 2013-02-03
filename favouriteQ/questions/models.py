@@ -12,11 +12,12 @@ class QuestionManager(models.Manager):
         return self.order_by('-asked_date').filter(asked_date__isnull=False,
                                                    approved=1)[0]
 
-    def get_new_question(self):
+    def get_new_question(self, exclude=None):
         # get priority questions first
         questions = self.order_by('?').filter(asked_date__isnull=True,
                                               priority=1,
-                                              approved=1)
+                                              approved=1).exclude(id=exclude)
+
         # no priority questions then get from non-priority
         if not questions:
             questions = self.order_by('?').filter(asked_date__isnull=True,
