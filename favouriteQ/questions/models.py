@@ -40,7 +40,7 @@ class Question(models.Model):
     approved = models.BooleanField()
     # Twitter user which suggested the question
     # TODO: update this to link to be an foreign key to Person
-    twitter_user = models.CharField(max_length=140, null=True)
+    twitter_user = models.CharField(max_length=140, null=True, blank=True)
 
     # System fields
     created_at = models.DateTimeField(auto_now_add=True)
