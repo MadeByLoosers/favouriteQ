@@ -37,9 +37,10 @@ class Command(BaseCommand):
             current_question.save()
 
         # Ask new question (exclude the question before)
+        # TODO: add try catch in case we're out of questions (ask for more?)
         question = Question.objects.get_new_question(exclude=current_question.id)
         try:
-            status = twitter_api.PostUpdate(question.question)
+            status = twitter_api.PostUpdate("Good morning. %s" % question.question)
             self.stdout.write(status.text + "\n")
         except Exception, e:
             self.stdout.write('Twitter exception: %s' % e)
