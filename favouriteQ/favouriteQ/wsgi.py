@@ -14,6 +14,12 @@ framework.
 
 """
 import os
+import sys
+
+# Make sure the settings file is found
+# http://blog.dscpl.com.au/2010/03/improved-wsgi-script-for-use-with.html
+# TODO: could we do something smart to get this from this files location?
+sys.path.insert(0, '/var/www/favouriteQ/favouriteQ')
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "favouriteQ.settings")
 
