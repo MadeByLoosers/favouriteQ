@@ -45,9 +45,9 @@ def staging():
 def deploy_vagrant():
     git_pull()
     install_requirements()
-    migrate_database()
-    collectstatic()
-    restart_apache()
+    # migrate_database()
+    # collectstatic()
+    # restart_apache()
 
 
 def restart_apache():
@@ -71,7 +71,8 @@ def deploy():
 
 def git_pull():
     with cd(env.git_repo_path):
-        run('git pull')
+        # TODO: take branch or tag as an argument
+        run('git pull origin master')
     #TODO: also update the config repo (this should be checked out with ssh keys as the GuntOps bit bucket user)
 
 
