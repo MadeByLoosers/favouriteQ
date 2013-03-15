@@ -306,7 +306,7 @@
             "is_active": true,
             "is_superuser": true,
             "is_staff": true,
-            "last_login": "2013-03-15T15:15:25Z",
+            "last_login": "2013-03-15T15:25:16Z",
             "groups": [],
             "user_permissions": [],
             "password": "pbkdf2_sha256$10000$GMvPvfw0vl9s$K2qe2pnshC7hI2g5GLrEjy6VSK+OoD8QXH3cNsvcZwM=",
