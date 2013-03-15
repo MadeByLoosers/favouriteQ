@@ -43,7 +43,7 @@ def staging():
 def deploy_vagrant():
     git_pull()
     install_requirements()
-    # migrate_database()
+    migrate_database()
     # collectstatic()
     # restart_apache()
 
@@ -88,7 +88,8 @@ def install_requirements():
 def migrate_database():
     with cd(os.path.join(env.directory, PROJECT_NAME)):
         with prefix('source ' + env.activate):
-            run('./manage.py migrate')
+            run('python manage.py syncdb')
+            run('python manage.py migrate')
 
 
 def collectstatic():
