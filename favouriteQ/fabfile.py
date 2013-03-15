@@ -14,9 +14,7 @@ def develop():
     env.directory = '/var/www/favouritequestion.com/'
     env.activate = '/venv/bin/activate'
     env.git_repo_path = '/var/www/favouritequestion.com/'
-    #env.key_filename = ['~/.ssh/django.pem']
-    # The name supervisor uses
-    # env.server_name = 'favourite_q'
+    env.forward_agent = True
 
 
 def production():
