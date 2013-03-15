@@ -88,7 +88,7 @@ def install_requirements():
 def migrate_database():
     with cd(os.path.join(env.directory, PROJECT_NAME)):
         with prefix('source ' + env.activate):
-            run('python manage.py syncdb')
+            run('echo "no\n"| python manage.py syncdb')
             run('python manage.py migrate')
 
 
