@@ -23,9 +23,14 @@ class Command(BaseCommand):
 
         if num_answers > 0:
             # send summary tweet with archive link
-            archive_url = reverse('questions.views.detail', args=(current_question.slug,))
+            archive_url = reverse('questions.views.detail',
+                                  args=(current_question.slug,))
             archive_url = urlparse.urljoin(settings.DOMAIN, archive_url)
+
             tweet_text = "Results for %s: %s" % (current_question.question, archive_url)
+            if len(tweet_text) > 140:
+                tweet_text = "Results for yesterday's question: %s" % archive_url
+
             try:
                 status = twitter_api.PostUpdate(tweet_text)
                 self.stdout.write(status.text + "\n")
