@@ -14,6 +14,17 @@ framework.
 
 """
 import os
+import sys
+
+# Make sure the settings file is found
+# http://blog.dscpl.com.au/2010/03/improved-wsgi-script-for-use-with.html
+path = os.path.abspath('..')
+# trailing slash needed for apache to behave
+if not path.endswith(os.path.sep):
+    path += os.path.sep
+# temp hack as dynamic path was failing under apache
+path = '/var/www/favouritequestion.com/favouriteQ/'
+sys.path.insert(0, path)
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "favouriteQ.settings")
 

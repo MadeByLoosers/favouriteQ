@@ -1,6 +1,14 @@
-00 07 * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/manage.py archive_current_and_post_new_question.py
+00 07 * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/manage.py archive_current_and_post_new_question
 00 12 * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/manage.py repost_current_question
 00 18 * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/manage.py repost_current_question
 00 20 * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/manage.py low_on_questions
 00 10 * * 0 ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/manage.py new_questions_request
 * * * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/manage.py search_twitter
+
+
+
+# Back-up of old cron
+#00 09 * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/git_favouriteQ/favouriteQ/post_to_twitter.py
+#* * * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/git_favouriteQ/favouriteQ/search_twitter.py
+00 09 * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/post_to_twitter.py
+* * * * * ~/virtualenv/favouriteQ/env/bin/python /srv/www/www.favouritequestion.com/favouriteQ/search_twitter.py

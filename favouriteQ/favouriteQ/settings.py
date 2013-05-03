@@ -164,6 +164,11 @@ TWITTER_API = {
 TWITTER_USER = 'FavouriteQ'
 DOMAIN = 'http://favouritequestion.com/'
 
+import os
+PROJECT_PATH = os.path.dirname(__file__)
+
+STATIC_ROOT = os.path.join(PROJECT_PATH, "../../static") + '/'
+
 try:
     from localsettings.localsettings import *
 except:
