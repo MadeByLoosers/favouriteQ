@@ -10,6 +10,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        greeeting_dict = {
+            1: 'Good morning.',
+            2: 'Good afternoon.',
+            3: 'Good evening.'}
+
         twitter_api = twitter.Api(
             consumer_key=settings.TWITTER_API['consumer_key'],
             consumer_secret=settings.TWITTER_API['consumer_secret'],
@@ -19,9 +24,14 @@ class Command(BaseCommand):
         # Ask the current question again
         question = Question.objects.get_current_question()
         try:
-            status = twitter_api.PostUpdate(question.question)
+            if len(args) > 0:
+                # lookup in greeting dict here, didn't want to hardcode text in cron
+                greeting = greeeting_dict.get(int(args[0]), '')
+                tweet = '%s %s' % (greeting, question.question)
+            else:
+                tweet = question.question
+            status = twitter_api.PostUpdate(tweet)
             self.stdout.write(status.text + "\n")
+
         except Exception, e:
             self.stdout.write('Twitter exception: %s' % e)
-        question.asked_date = timezone.now()
-        question.save()
