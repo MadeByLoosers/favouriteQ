@@ -21,8 +21,6 @@ class Command(BaseCommand):
 
         # Example URL http://search.twitter.com/search.json?q=%40favouriteQ
         tweets = self.twitter_api.GetSearch(self.twitter_account,
-                                       per_page=100,
-                                       page=1,
                                        lang='',
                                        since_id=answer.tweet_id)
 
