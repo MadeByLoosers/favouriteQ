@@ -28,7 +28,7 @@ Create tables for apps that are using south. Data will be loaded from fixtures
 ./manage.py migrate
 ```
 
-During development developers should continue to run the ./manage.py migrate command to keep their DB up to date. 
+During development developers should continue to run the ./manage.py migrate command to keep their DB up to date.
 
 ###Virtual environment
 
@@ -69,3 +69,18 @@ python manage.py runserver
 ```
 
 Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in a browser
+
+###Deploy Live
+
+From the root
+
+```
+cd favouriteQ
+fab production deploy
+```
+
+If you want less verbose output
+
+```
+fab production deploy --hide=stdout
+```
