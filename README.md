@@ -72,6 +72,8 @@ Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in a browser
 
 ###Deploy Live
 
+Note you will need to have installed requirements so you have fabric on your machine.
+
 From the root
 
 ```
