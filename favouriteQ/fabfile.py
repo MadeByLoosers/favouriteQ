@@ -18,7 +18,7 @@ def develop():
 
 
 def production():
-    env.hosts = ['54.245.116.229']
+    env.hosts = ['54.228.188.132']
     env.user = 'ec2-user'
     env.directory = '/srv/www/www.favouritequestion.com/'
     env.activate = '/home/ec2-user/virtualenv/favouriteQ/env/bin/activate'
@@ -29,7 +29,7 @@ def production():
 
 
 def staging():
-    env.hosts = ['54.245.116.229']
+    env.hosts = ['54.228.188.132']
     env.user = 'ec2-user'
     env.directory = '/srv/www/staging.favouritequestion.com/'
     #TODO: give staging it's own venv (could be created by initialise)
